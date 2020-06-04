@@ -1,0 +1,12 @@
+.banner-info {
+  height: 30rem;
+  &__link {
+    color: #fff;
+    font-size: 1.6rem;
+    transition: all 0.3s;
+
+    &:hover {
+      color: var(--main);
+    }
+  }
+}

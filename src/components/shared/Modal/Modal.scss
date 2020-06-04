@@ -1,0 +1,116 @@
+.modal {
+  z-index: 100;
+  position: fixed;
+  top: 22vh;
+  left: 10%;
+  width: 80%;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  border-radius: 8px;
+  &__header {
+    width: 100%;
+    padding: 1rem 0.5rem;
+  }
+  &__header h2 {
+    margin: 0.5rem;
+  }
+  &__content {
+    padding: 1rem 0.5rem;
+  }
+  &__footer {
+    padding: 1rem 0.5rem;
+  }
+  &-enter {
+    transform: translateY(-10rem);
+    opacity: 0;
+    &-active {
+      transform: translateY(0);
+      opacity: 1;
+      transition: all 200ms;
+    }
+  }
+  &-exit {
+    transform: translateY(0);
+    opacity: 1;
+    &-active {
+      transform: translateY(-10rem);
+      opacity: 0;
+      transition: all 200ms;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .modal {
+    left: calc(50% - 21rem);
+    width: 42rem;
+  }
+}
+
+.login-modal {
+  padding: 2rem 2.5rem;
+  top: 10%;
+}
+
+.login-header {
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.6rem;
+}
+
+.login-content {
+  &__forget {
+    text-align: right;
+    font-size: 1.3rem;
+  }
+  &__link {
+    color: #2196f3;
+  }
+  &__signin {
+    width: 100%;
+    margin-top: 4rem;
+    padding: 1.2rem 0;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: 0;
+    border-radius: 15rem;
+    color: #fff;
+    outline: none;
+    background-image: linear-gradient(
+      40deg,
+      rgb(69, 202, 252),
+      rgb(48, 63, 159)
+    );
+    box-shadow: 0 2px 5px 0 rgba(55, 161, 255, 0.26),
+      0 4px 12px 0 rgba(121, 155, 254, 0.25);
+    transition: all 0.3s;
+    &:disabled {
+      box-shadow: none;
+      cursor: not-allowed;
+      background: #ccc;
+      color: #979797;
+      border-color: #ccc;
+      cursor: not-allowed;
+    }
+  }
+  &__option {
+    font-size: 1.3rem;
+    text-align: center;
+    margin: 2rem 0;
+  }
+  &__social-signin {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 0 3rem;
+    margin: 2rem 0;
+  }
+}
+
+.login-footer {
+  border-top: 1px solid #d9d9d9;
+  &__content {
+    text-align: right;
+    font-size: 1.3rem;
+    margin-top: 2rem;
+  }
+}

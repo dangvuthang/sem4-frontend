@@ -1,0 +1,34 @@
+.main-nav {
+  &__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &-list {
+      display: flex;
+      align-items: center;
+    }
+    &-item {
+      &:not(:last-child) {
+        margin-right: 1.5rem;
+      }
+    }
+    &-link {
+      color: inherit;
+      text-transform: uppercase;
+      font-size: 1.3rem;
+      font-weight: 500;
+      padding: 3rem 1.5rem;
+      transition: all 0.3s;
+      &:hover {
+        color: var(--main);
+      }
+      &.active {
+        color: var(--main);
+      }
+    }
+  }
+}
+
+.logo {
+  width: 11.4rem;
+}

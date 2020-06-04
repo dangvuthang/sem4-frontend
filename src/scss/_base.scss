@@ -1,0 +1,30 @@
+@import url("https://fonts.googleapis.com/css?family=Playfair+Display:400,700,900|Roboto:300,400,500,700");
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --main: #4dbf1c;
+  --rob: "Roboto", sans-serif;
+  --play: "Playfair Display", serif;
+  --heading: #222;
+  --paragraph: #777;
+  font-size: 62.5%;
+}
+
+body {
+  font-family: var(--rob);
+  color: #333;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  display: inline-block;
+}

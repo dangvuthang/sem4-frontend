@@ -1,0 +1,34 @@
+.social-media-nav {
+  background-color: #f9f9ff;
+
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &-list {
+      display: flex;
+      font-size: 1.4rem;
+    }
+    &-item {
+      margin-right: 1.5rem;
+    }
+    &-link {
+      color: var(--paragraph);
+      transition: all 0.3s;
+      padding: 1.2rem 0;
+      &:hover {
+        color: var(--main);
+      }
+    }
+    &-info {
+      font-size: 1.2rem;
+      color: var(--paragraph);
+      padding: 1.2rem 0;
+      margin-right: 3rem;
+      transition: all 0.3s;
+      &:hover {
+        color: var(--main);
+      }
+    }
+  }
+}
