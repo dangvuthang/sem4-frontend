@@ -14,9 +14,9 @@ const SocialMediaNav = props => {
           <ul className="social-media-nav__content-list">
             {icons.map(i => (
               <li className="social-media-nav__content-item" key={i}>
-                <a href="#" className="social-media-nav__content-link">
+                <button className="social-media-nav__content-link">
                   <i className={i} key={i}></i>
-                </a>
+                </button>
               </li>
             ))}
           </ul>
@@ -27,9 +27,9 @@ const SocialMediaNav = props => {
             >
               +440 012 3654 896
             </a>
-            <a href="#" className="social-media-nav__content-info">
+            <button className="social-media-nav__content-info">
               support@ToVN.com
-            </a>
+            </button>
           </div>
         </div>
       </div>

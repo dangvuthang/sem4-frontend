@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import logo from "../../../img/logo.png";
 import AuthContext from "../../shared/context/authContext";
 import { NavLink, Link } from "react-router-dom";
-import LoginModal from "../../shared/Modal/LoginModal";
+import AuthModal from "../../shared/Modal/AuthModal";
 
 import "./MainNav.scss";
 const routes = [
@@ -27,7 +27,7 @@ const MainNav = ({ reference }) => {
 
   return (
     <>
-      <LoginModal
+      <AuthModal
         isModalOpen={isModalOpen}
         handleOnModalClose={handleOnModalClose}
       />

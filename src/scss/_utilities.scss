@@ -13,6 +13,7 @@
   transition: all 0.3s;
   border-radius: 5px;
   outline: none;
+  border: none;
   &--primary {
     color: #fff;
     background-color: $color-primary;
@@ -30,6 +31,11 @@
     box-shadow: 0 2px 5px 0 rgba(55, 161, 255, 0.26),
       0 4px 12px 0 rgba(121, 155, 254, 0.25);
     border-radius: 15rem;
+  }
+  &--error {
+    padding: 1.3rem 4rem;
+    background-color: #f44336;
+    color: #fff;
   }
 }
 

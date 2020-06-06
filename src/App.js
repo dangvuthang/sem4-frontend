@@ -40,6 +40,12 @@ function App() {
           <Route path="/tours">
             <BannerInfo />
           </Route>
+          <Route path="/destination">
+            <BannerInfo />
+          </Route>
+          <Route path="/signup">
+            <BannerInfo />
+          </Route>
         </Switch>
       </Router>
     </AuthContext.Provider>

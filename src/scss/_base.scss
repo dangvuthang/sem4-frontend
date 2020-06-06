@@ -12,12 +12,13 @@
   --play: "Playfair Display", serif;
   --heading: #222;
   --paragraph: #777;
+  --black: #333;
   font-size: 62.5%;
 }
 
 body {
   font-family: var(--rob);
-  color: #333;
+  color: var(--black);
 }
 
 ul {
@@ -27,4 +28,11 @@ ul {
 a {
   text-decoration: none;
   display: inline-block;
+}
+
+button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-color: transparent;
 }

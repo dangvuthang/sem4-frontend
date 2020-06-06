@@ -4,12 +4,18 @@ const useForm = inputField => {
   const [inputValue, setInputValue] = useState(inputField);
   const [errorMsg, setErrorMsg] = useState(
     Object.keys(inputField).reduce(
-      (prev, curr) => Object.assign(prev, { [curr]: "" }),
+      (prev, curr) => ({ ...prev, [curr]: "" }),
       {}
     )
   );
 
   const handleOnChange = ({ target: inputElement }) => {
+    console.log(inputElement.type);
+    if (inputElement.type === "file")
+      return setInputValue({
+        ...inputValue,
+        [inputElement.id]: inputElement.files[0],
+      });
     if (inputElement.value.length > 0) inputElement.classList.add("has-value");
     else inputElement.classList.remove("has-value");
     const errorObj = { ...errorMsg };

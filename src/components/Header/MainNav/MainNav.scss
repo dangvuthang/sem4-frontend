@@ -33,10 +33,7 @@
       &:hover {
         color: var(--main);
       }
-      &:focus {
-        border: none;
-        outline: none;
-      }
+
       &.active {
         color: var(--main);
       }
