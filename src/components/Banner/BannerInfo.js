@@ -12,7 +12,8 @@ const BannerInfo = props => {
       <h3 className="banner__title">{currentLocation}</h3>
       <div className="banner-info__links">
         <Link to="/" className="banner-info__link">
-          Home <i class="fas fa-arrow-right" style={{ margin: "0 1rem" }}></i>
+          Home{" "}
+          <i className="fas fa-arrow-right" style={{ margin: "0 1rem" }}></i>
         </Link>
         <Link to={location.pathname} className="banner-info__link">
           {currentLocation}
