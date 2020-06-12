@@ -16,6 +16,7 @@ const Search = () => {
 
   const handleSearchTour = e => {
     e.preventDefault();
+    console.log({ datePicker, searchOption });
   };
 
   return (

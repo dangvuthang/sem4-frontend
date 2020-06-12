@@ -1,0 +1,19 @@
+.comment {
+  padding: 1rem 0;
+  border-top: 1px solid #8a92a3;
+  border-bottom: 1px solid #8a92a3;
+  display: flex;
+  &__user {
+    flex: 1;
+    display: flex;
+  }
+  &__content {
+    flex: 3;
+    &-rating {
+      font-size: 2rem;
+    }
+    &-thought {
+      color: #29303b;
+    }
+  }
+}

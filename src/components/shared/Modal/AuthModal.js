@@ -38,7 +38,31 @@ const LoginModal = ({ isModalOpen, handleOnModalClose }) => {
           password: inputValue.password,
         })
       );
-      if (data) auth.login(data.jwt, data.user);
+      if (data) {
+        auth.login(data.jwt, data.email);
+        handleOnModalClose();
+      }
+    }
+    if (!isLogin) {
+      const formData = new FormData();
+      formData.append("email", inputValue.email);
+      formData.append("password", inputValue.password);
+      formData.append("name", inputValue.name);
+      formData.append("phone", inputValue.phone);
+      if (inputValue.avatar) {
+        formData.append("avatarImage", inputValue.avatar);
+      }
+      console.log(formData);
+      const data = await sendRequest(
+        `${process.env.REACT_APP_END_POINT}/api/v1/users/signup`,
+        "POST",
+        {},
+        formData
+      );
+      if (data) {
+        auth.login(data.jwt, data.email);
+        handleOnModalClose();
+      }
     }
   };
 

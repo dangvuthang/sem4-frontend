@@ -7,10 +7,7 @@ const ImageUpload = ({ file: imageFile, handleOnImageChange, id }) => {
   useEffect(() => {
     if (!imageFile) return;
     const fileReader = new FileReader();
-    fileReader.onload = () => {
-      imageElement.current.src = fileReader.result;
-      console.log(fileReader);
-    };
+    fileReader.onload = () => (imageElement.current.src = fileReader.result);
     fileReader.readAsDataURL(imageFile);
   }, [imageFile]);
 
@@ -26,7 +23,11 @@ const ImageUpload = ({ file: imageFile, handleOnImageChange, id }) => {
         ref={inputElement}
         onChange={handleOnImageChange}
       />
-      <button className="image-upload__button" onClick={handleButtonClicked}>
+      <button
+        type="button"
+        className="image-upload__button"
+        onClick={handleButtonClicked}
+      >
         Pick Avatar
       </button>
       <div className="image-upload__preview">

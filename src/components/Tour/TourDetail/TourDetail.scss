@@ -1,0 +1,103 @@
+.tour-detail {
+  font-size: 1.6rem;
+  &__image-cover {
+    height: 50rem;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+  }
+  &__image-content {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    text-align: center;
+    color: #fff;
+  }
+  &__name {
+    font-family: var(--play);
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+  }
+  &__summary {
+    font-size: 1.4rem;
+  }
+  &__info {
+    background-color: #f9f9ff;
+  }
+  &__section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    font-size: 1.5rem;
+    padding: 2rem;
+    gap: 2rem;
+    justify-items: center;
+  }
+  &__data {
+    color: #222222;
+    font-weight: 500;
+    align-content: center;
+  }
+  &__icon {
+    color: var(--main);
+    margin-right: 0.5rem;
+  }
+  &__description {
+    padding: 4rem 0;
+    &-title {
+      font-family: var(--play);
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    &-paragraph {
+      font-size: 1.4rem;
+      color: #777777;
+
+      margin: 0 auto;
+      line-height: 2.4rem;
+    }
+  }
+}
+
+.fixed {
+  background-color: #fff;
+  box-shadow: 0 0 1px 1px rgba(20, 23, 28, 0.1),
+    0 3px 1px 0 rgba(20, 23, 28, 0.1);
+  border-radius: 4px;
+  color: #505763;
+  padding: 3rem 2rem;
+  height: 40vh;
+}
+
+.price {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.book {
+  width: 100%;
+  display: block;
+  text-align: center;
+  color: #fff;
+  background-color: var(--main);
+  padding: 1rem 0;
+  font-size: 1.4rem;
+  margin-bottom: 0.7rem;
+}
+
+.refund {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.includes {
+  & > li:not(:last-child) {
+    margin-bottom: 1.7rem;
+  }
+}
+
+.tour-detail__rating-start {
+  font-size: 2.5rem;
+}

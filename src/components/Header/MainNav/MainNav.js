@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import logo from "../../../img/logo.png";
+import avatar from "../../../img/avatar.png";
 import AuthContext from "../../shared/context/authContext";
 import { NavLink, Link } from "react-router-dom";
 import AuthModal from "../../shared/Modal/AuthModal";
@@ -9,7 +10,6 @@ const routes = [
   { name: "Home", link: "/" },
   { name: "Tours", link: "/tours" },
   { name: "Destination", link: "/destination" },
-  { name: "About", link: "/about" },
 ];
 const MainNav = ({ reference }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -76,13 +76,79 @@ const MainNav = ({ reference }) => {
                     Authenticate
                   </button>
                 ) : (
-                  <button
-                    className="main-nav__content-link"
-                    onClick={auth.logout}
-                  >
-                    {" "}
-                    Logout
-                  </button>
+                  <>
+                    <Link
+                      className="main-nav__content-link"
+                      to="/user"
+                      style={{ padding: "1.1rem" }}
+                    >
+                      <img
+                        src={avatar}
+                        style={{
+                          width: "50px",
+                          height: "50px",
+                          borderRadius: "50%",
+                        }}
+                        alt="Avatar"
+                      />
+                    </Link>
+                    <ul className="user-dropdown">
+                      <li className="user-dropdown__item">
+                        <Link className="user-dropdown__link" to="/user">
+                          <div className="user-dropdown__data">
+                            <div className="user-dropdown__avatar">
+                              <img
+                                src={avatar}
+                                style={{
+                                  width: "50px",
+                                  height: "50px",
+                                  borderRadius: "50%",
+                                }}
+                                alt="Avatar"
+                              />
+                            </div>
+                            <div>
+                              <span
+                                style={{ color: "#29303b", fontSize: "1.6rem" }}
+                              >
+                                Dang Vu Thang
+                              </span>
+                              <br />
+                              <span
+                                style={{ color: "#686f7a", fontSize: "1.3rem" }}
+                              >
+                                dangvuthang@gmail.com
+                              </span>
+                            </div>
+                          </div>
+                        </Link>
+                      </li>
+                      <li className="user-dropdown__item">
+                        <Link
+                          className="user-dropdown__link user-dropdown__info"
+                          to="/user"
+                        >
+                          My Account
+                        </Link>
+                      </li>
+                      <li className="user-dropdown__item">
+                        <Link
+                          className="user-dropdown__link user-dropdown__info"
+                          to="/user"
+                        >
+                          Purchase History
+                        </Link>
+                      </li>
+                      <li className="user-dropdown__item">
+                        <button
+                          className="user-dropdown__link user-dropdown__info"
+                          onClick={auth.logout}
+                        >
+                          Log out
+                        </button>
+                      </li>
+                    </ul>
+                  </>
                 )}
               </li>
             </ul>

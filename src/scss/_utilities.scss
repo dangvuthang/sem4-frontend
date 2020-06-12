@@ -4,6 +4,18 @@
   padding: 0 1rem;
 }
 
+.row {
+  display: flex;
+}
+
+.col-3 {
+  flex: 25%;
+}
+
+.col-9 {
+  flex: 75%;
+}
+
 .btn {
   padding: 1.8rem 4rem;
   font-family: $font-rob;
@@ -39,4 +51,10 @@
   }
 }
 
-// rgba(121, 155, 254, 0.25)
+.marker {
+  background-image: url("../img/pin.png");
+  background-size: cover;
+  width: 32px;
+  height: 40px;
+  cursor: pointer;
+}
