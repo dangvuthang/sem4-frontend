@@ -1,87 +1,113 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./TourList.scss";
-import Label from "./Label/Label";
-import DatePicker from "react-date-picker";
-import StarRatingComponent from "react-star-rating-component";
 import TourItem from "./TourItem/TourItem";
+import Filter from "./Filter/Filter";
+import Sort from "./Sort/Sort";
+import useRequest from "../shared/hooks/useRequest";
+import LoadingSpinner from "../shared/LoadingSpinner/LoadingSpinner";
+import ErrorModal from "../shared/Modal/ErrorModal";
+import Pagination from "./Pagination/Pagination";
+import paginate from "../../utils/paginate";
+import _ from "lodash";
+import { toast } from "react-toastify";
+const pageSize = 6;
 const TourList = props => {
+  const [isLoading, isError, sendRequest, clearError] = useRequest();
+  const [tours, setTours] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [sort, setSort] = useState({
+    order: "asc",
+    category: "price",
+  });
+  const [filter, setFilter] = useState({
+    search: "",
+    duration: "",
+    minPrice: "",
+    maxPrice: "",
+    rating: 0,
+    startDate: "",
+  });
+
+  useEffect(() => {
+    const getTours = async () => {
+      const data = await sendRequest(
+        `${process.env.REACT_APP_END_POINT}/api/v1/tours`
+      );
+      if (data) setTours(data);
+    };
+    getTours();
+  }, [sendRequest, setTours]);
+
+  const actualDate = (() => {
+    let filterItems = tours;
+    const { search, duration, minPrice, maxPrice, rating, startDate } = filter;
+
+    if (search)
+      filterItems = filterItems.filter(tour =>
+        tour.name.toLowerCase().includes(search.toLowerCase())
+      );
+    if (duration)
+      filterItems = filterItems.filter(tour => {
+        if (parseInt(duration) === 4) return tour.duration <= 4;
+        if (parseInt(duration) === 6)
+          return tour.duration > 4 && tour.duration <= 7;
+        if (parseInt(duration) === 7) return tour.duration >= 7;
+      });
+    if (minPrice)
+      filterItems = filterItems.filter(tour => tour.price >= minPrice);
+    if (maxPrice)
+      filterItems = filterItems.filter(tour => tour.price <= maxPrice);
+    if (rating)
+      filterItems = filterItems.filter(
+        tour => tour.ratingAverage >= parseInt(rating)
+      );
+    if (startDate)
+      filterItems = filterItems.filter(
+        tour =>
+          startDate.toLocaleDateString() ===
+          new Date(tour.startDate).toLocaleDateString()
+      );
+    const sortedItems = _.orderBy(filterItems, [sort.category], sort.order);
+    return sortedItems;
+  })();
+
   return (
-    <section className="tour-section">
-      <div className="container">
-        <div className="row">
-          <div className="col-3">
-            <div className="filter-section">
-              <h3 className="filter-section__title">
-                <i className="fas fa-search" style={{ marginRight: "5px" }}></i>{" "}
-                Tour Search
-              </h3>
-              <Label name="Keyword">
-                <input
-                  className="filter-section__search-keyword"
-                  placeholder="Search..."
-                />
-                <i className="fas fa-search filter-section__search-icon"></i>
-              </Label>
-              <Label name="Duration">
-                <select className="filter-section__search-keyword">
-                  <option>Any</option>
-                  <option>2-4 Days Tour</option>
-                  <option>5-7 Days Tour</option>
-                  <option>7+ Days Tour</option>
-                </select>
-              </Label>
-              <Label name="Start Date">
-                <DatePicker className="filter-section__start-date" />
-              </Label>
-              <div className="filter-section__price">
-                <Label name="Min Price">
-                  <input className="filter-section__price-search" />
-                </Label>
-                <Label name="Max Price">
-                  <input className="filter-section__price-search" />
-                </Label>
-              </div>
-              <Label name="Rating">
-                <div className="filter-section__rating">
-                  <StarRatingComponent
-                    name="rating"
-                    className="filter-section__start-rating"
-                    // emptyStarColor="#7f7f7f"
-                  />{" "}
-                  <span className="filter-section__start-content">or more</span>
-                </div>
-              </Label>
+    <>
+      {isError && <ErrorModal onClear={clearError} error={isError} />}
+      <section className="tour-section">
+        <div className="container">
+          <div className="row">
+            <div className="col-3">
+              <Filter filter={filter} setFilter={setFilter} />
             </div>
-          </div>
-          <div className="col-9">
-            <div className="tour-result">
-              <div className="sort-section">
-                <h3 className="sort-section__title">Sort by</h3>
-                <select className="sort-section__category">
-                  <option>Release Date</option>
-                  <option>Title</option>
-                  <option>Rating</option>
-                  <option>Price</option>
-                  <option>Duration</option>
-                </select>
-                <select className="sort-section__order">
-                  <option>Ascending</option>
-                  <option>Descending</option>
-                </select>
-              </div>
-              <div className="tour-list">
-                <TourItem tour={{ id: 1, name: "Pokemon Adventure" }} />
-                <TourItem tour={{ id: 1, name: "Pokemon Adventure" }} />
-                <TourItem tour={{ id: 1, name: "Pokemon Adventure" }} />
-                <TourItem tour={{ id: 1, name: "Pokemon Adventure" }} />
-                <TourItem tour={{ id: 1, name: "Pokemon Adventure" }} />
-                <TourItem tour={{ id: 1, name: "Pokemon Adventure" }} />
+            <div className="col-9">
+              <div className="tour-result">
+                <Sort sort={sort} setSort={setSort} />
+                <div
+                  className="tour-list"
+                  style={
+                    actualDate.length === 1
+                      ? { gridTemplateColumns: "40rem" }
+                      : null
+                  }
+                >
+                  {isLoading && <LoadingSpinner asOverlay />}
+                  {paginate(currentPage, pageSize, actualDate).map(tour => (
+                    <TourItem tour={tour} key={tour.id} />
+                  ))}
+                </div>
+                <Pagination
+                  currentPage={currentPage}
+                  pageSize={pageSize}
+                  numberOfItems={actualDate.length}
+                  setCurrentPage={setCurrentPage}
+                />
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 
