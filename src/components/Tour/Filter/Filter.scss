@@ -1,0 +1,62 @@
+.filter-section {
+  padding: 2.3rem;
+  border: 1px solid #dee2e7;
+  font-family: var(--play);
+  font-weight: 300;
+  &__title {
+    font-size: 1.8rem;
+    color: #444;
+  }
+  &__search-keyword {
+    outline: none;
+    border: 1px solid #e5e5e5;
+    width: 100%;
+    padding: 1rem 0;
+    padding-left: 1rem;
+    padding-right: 3rem;
+    position: relative;
+    color: #7f7f7f;
+    font-size: 1.5rem;
+  }
+  &__search-icon {
+    position: absolute;
+    font-size: 1.5rem;
+    right: 15px;
+    bottom: 12px;
+  }
+  &__start-date {
+    width: 100%;
+    font-size: 1.6rem;
+    font-family: var(--robo);
+    & > div {
+      border: 1px solid #e5e5e5;
+      padding: 0.8rem 0;
+      padding-left: 1rem;
+      padding-right: 3rem;
+    }
+  }
+  &__price {
+    display: flex;
+  }
+  &__price-search {
+    width: 70%;
+    border: 1px solid #e5e5e5;
+    padding: 0.8rem 0;
+    font-size: 1.5rem;
+    color: #7f7f7f;
+    padding-left: 1rem;
+    padding-right: 3rem;
+  }
+  &__rating {
+    display: flex;
+    align-items: center;
+  }
+  &__start-rating {
+    font-size: 2rem;
+  }
+  &__start-content {
+    font-size: 1.5rem;
+    color: #7f7f7f;
+    margin-left: 3px;
+  }
+}
