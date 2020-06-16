@@ -16,6 +16,19 @@ export default ({ id, value }) => {
     if (!Number(value)) return "Phone must contain only digit";
     if (value.length < 9) return "Phone must contain at least 9 digits";
   }
-
+  if (id === "oldPassword") {
+    if (value === "") return "Old Password is required";
+    if (value.length < 6)
+      return "Old Password must contain at least 6 characters";
+  }
+  if (id === "newPassword") {
+    if (value === "") return "New Password is required";
+    if (value.length < 6)
+      return "New Password must contain at least 6 characters";
+  }
+  if (id === "passwordConfirm") {
+    if (value === "") return "Confirm Password is required";
+    if (value.length < 6) return "Make sure your password matches";
+  }
   return "";
 };
