@@ -1,0 +1,26 @@
+.account {
+  padding: 4rem 0;
+  &-control {
+    text-align: center;
+    border: 1px solid #dee2e7;
+    margin-right: 3rem;
+    padding: 2rem 0;
+    &__avatar {
+      margin: 1rem 0;
+    }
+    &__list {
+      text-align: left;
+      font-size: 1.6rem;
+    }
+    &__link {
+      color: #007791;
+      width: 100%;
+      padding: 1rem 0 0.5rem 3rem;
+      transition: all 0.3s;
+      &:hover {
+        color: #fff;
+        background-color: #8a92a3;
+      }
+    }
+  }
+}
