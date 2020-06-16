@@ -1,19 +1,20 @@
 import React, { useState, useContext } from "react";
 import logo from "../../../img/logo.png";
-import avatar from "../../../img/avatar.png";
 import AuthContext from "../../shared/context/authContext";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useLocation, useHistory } from "react-router-dom";
 import AuthModal from "../../shared/Modal/AuthModal";
 
 import "./MainNav.scss";
+
 const routes = [
   { name: "Home", link: "/" },
   { name: "Tours", link: "/tours" },
   { name: "Destination", link: "/destination" },
 ];
-const MainNav = ({ reference }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
+const MainNav = ({ reference, tourTypes }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const history = useHistory();
   const handleOnModalOpen = e => {
     e.preventDefault();
     setIsModalOpen(true);
@@ -24,6 +25,10 @@ const MainNav = ({ reference }) => {
   };
 
   const auth = useContext(AuthContext);
+  const handleLogout = () => {
+    history.push("/");
+    auth.logout();
+  };
 
   return (
     <>
@@ -51,16 +56,16 @@ const MainNav = ({ reference }) => {
                   </NavLink>
                   {route.name === "Tours" && (
                     <ul className="main-nav__dropdown">
-                      <li className="main-nav__dropdown-item">
-                        <Link className="main-nav__dropdown-link" to="/hello">
-                          Relaxing
-                        </Link>
-                      </li>
-                      <li className="main-nav__dropdown-item">
-                        <Link className="main-nav__dropdown-link" to="/hello">
-                          Relaxing
-                        </Link>
-                      </li>
+                      {tourTypes.map(type => (
+                        <li className="main-nav__dropdown-item" key={type.id}>
+                          <Link
+                            className="main-nav__dropdown-link"
+                            to={`/tours?tourType=${type.id}`}
+                          >
+                            {type.name}
+                          </Link>
+                        </li>
+                      ))}
                     </ul>
                   )}
                 </li>
@@ -79,45 +84,53 @@ const MainNav = ({ reference }) => {
                   <>
                     <Link
                       className="main-nav__content-link"
-                      to="/user"
+                      to="/account"
                       style={{ padding: "1.1rem" }}
                     >
                       <img
-                        src={avatar}
+                        src={
+                          auth.user.avatarImage.startsWith("http")
+                            ? auth.user.avatarImage
+                            : `${process.env.REACT_APP_END_POINT}/images/${auth.user.avatarImage}`
+                        }
                         style={{
                           width: "50px",
                           height: "50px",
                           borderRadius: "50%",
                         }}
-                        alt="Avatar"
+                        alt="User"
                       />
                     </Link>
                     <ul className="user-dropdown">
                       <li className="user-dropdown__item">
-                        <Link className="user-dropdown__link" to="/user">
+                        <Link className="user-dropdown__link" to="/account">
                           <div className="user-dropdown__data">
                             <div className="user-dropdown__avatar">
                               <img
-                                src={avatar}
+                                src={
+                                  auth.user.avatarImage.startsWith("http")
+                                    ? auth.user.avatarImage
+                                    : `${process.env.REACT_APP_END_POINT}/images/${auth.user.avatarImage}`
+                                }
                                 style={{
                                   width: "50px",
                                   height: "50px",
                                   borderRadius: "50%",
                                 }}
-                                alt="Avatar"
+                                alt="User"
                               />
                             </div>
                             <div>
                               <span
                                 style={{ color: "#29303b", fontSize: "1.6rem" }}
                               >
-                                Dang Vu Thang
+                                {auth.user.name}
                               </span>
                               <br />
                               <span
                                 style={{ color: "#686f7a", fontSize: "1.3rem" }}
                               >
-                                dangvuthang@gmail.com
+                                {auth.user.email}
                               </span>
                             </div>
                           </div>
@@ -126,7 +139,7 @@ const MainNav = ({ reference }) => {
                       <li className="user-dropdown__item">
                         <Link
                           className="user-dropdown__link user-dropdown__info"
-                          to="/user"
+                          to="/account"
                         >
                           My Account
                         </Link>
@@ -142,7 +155,7 @@ const MainNav = ({ reference }) => {
                       <li className="user-dropdown__item">
                         <button
                           className="user-dropdown__link user-dropdown__info"
-                          onClick={auth.logout}
+                          onClick={handleLogout}
                         >
                           Log out
                         </button>

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef } from "react";
 import Modal from "./Modal";
 import Input from "../Input/Input";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
@@ -9,6 +9,7 @@ import AuthContext from "../context/authContext";
 import { signInWithFacebook, signInWithGoogle } from "../../../utils/firebase";
 import ImageUpload from "../ImageUpload/ImageUpload";
 import "./AuthModal.scss";
+import { toast } from "react-toastify";
 
 const LoginModal = ({ isModalOpen, handleOnModalClose }) => {
   const auth = useContext(AuthContext);
@@ -26,6 +27,15 @@ const LoginModal = ({ isModalOpen, handleOnModalClose }) => {
   });
   const [isLoading, isError, sendRequest, clearError] = useRequest();
 
+  const handleSigninWithSocialMedia = async () => {
+    try {
+      await signInWithGoogle();
+      handleOnModalClose();
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const handleLoginSubmit = async e => {
     e.preventDefault();
     if (isLogin) {
@@ -39,7 +49,8 @@ const LoginModal = ({ isModalOpen, handleOnModalClose }) => {
         })
       );
       if (data) {
-        auth.login(data.jwt, data.email);
+        const { email, name, avatarImage, jwt } = data;
+        auth.login(jwt, { email, name, avatarImage });
         handleOnModalClose();
       }
     }
@@ -60,8 +71,17 @@ const LoginModal = ({ isModalOpen, handleOnModalClose }) => {
         formData
       );
       if (data) {
-        auth.login(data.jwt, data.email);
-        handleOnModalClose();
+        const { email, name, avatarImage, jwt } = data;
+        if (inputValue.avatar) {
+          toast.info("Processing...", { autoClose: 3000 });
+          setTimeout(() => {
+            auth.login(jwt, { email, name, avatarImage });
+            handleOnModalClose();
+          }, 3000);
+        } else {
+          auth.login(jwt, { email, name, avatarImage });
+          handleOnModalClose();
+        }
       }
     }
   };
@@ -185,7 +205,7 @@ const LoginModal = ({ isModalOpen, handleOnModalClose }) => {
               <button
                 type="button"
                 className="btn btn--white"
-                onClick={signInWithGoogle}
+                onClick={handleSigninWithSocialMedia}
               >
                 <i className="fab fa-google"></i>
               </button>

@@ -1,6 +1,14 @@
 import React from "react";
 import "./Input.scss";
-const Input = ({ id, label, type = "text", value, onChange, errorMsg }) => {
+const Input = ({
+  id,
+  label,
+  type = "text",
+  value,
+  onChange,
+  errorMsg,
+  readOnly,
+}) => {
   return (
     <div className="input-group">
       <input
@@ -9,6 +17,7 @@ const Input = ({ id, label, type = "text", value, onChange, errorMsg }) => {
         id={id}
         value={value}
         onChange={onChange}
+        readOnly={readOnly}
       />
       <label htmlFor={id}>{label}</label>
       {errorMsg && <div className="input-group__error-message">{errorMsg}</div>}

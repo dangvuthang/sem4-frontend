@@ -20,7 +20,10 @@ const ModalOverlay = ({
       <header className={`modal__header ${headerClass}`}>
         <h2>{headerContent}</h2>
       </header>
-      <form onSubmit={onSubmitForm ? onSubmitForm : e => e.preventDefault()}>
+      <form
+        onSubmit={onSubmitForm ? onSubmitForm : e => e.preventDefault()}
+        autoComplete="off"
+      >
         <div className={`modal__content ${contentClass}`}>{children}</div>
         <footer className={`modal__footer ${footerClass}`}>
           {footerContent}

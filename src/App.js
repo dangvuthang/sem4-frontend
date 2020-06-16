@@ -10,61 +10,97 @@ import Search from "./components/Search/Search";
 import TourList from "./components/Tour/TourList";
 import useRequest from "./components/shared/hooks/useRequest";
 import TourDetail from "./components/Tour/TourDetail/TourDetail";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
+import Account from "./components/Account/Account";
 function App() {
   const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
   const [isLoading, isError, sendRequest, clearError] = useRequest();
+  const [tourTypes, setTourTypes] = useState([]);
+
   const login = useCallback((token, user) => {
     setToken(token);
     setUser(user);
+    if (!localStorage.getItem("travelToVNData"))
+      toast.success("Successfully Login");
+    localStorage.setItem("travelToVNData", JSON.stringify({ user, token }));
   }, []);
 
   const logout = useCallback(() => {
     auth.signOut();
     setUser(null);
     setToken(null);
+    localStorage.removeItem("travelToVNData");
+    toast.success("Successfully Logout");
   }, []);
 
   useEffect(() => {
-    setToken(123);
-    setUser("vuthang@gmail.com");
-    // auth.onAuthStateChanged(async authUser => {
-    //   if (authUser) {
-    //     const data = await sendRequest(
-    //       `${process.env.REACT_APP_END_POINT}/api/v1/users/signinWithGoogle`,
-    //       "POST",
-    //       { "Content-Type": "application/json" },
-    //       JSON.stringify({
-    //         email: authUser.email,
-    //         name: authUser.displayName,
-    //         phone: authUser.phoneNumber,
-    //         avatarImage: authUser.photoURL,
-    //         providerKey: authUser.uid,
-    //       })
-    //     );
-    //     if (data) login(data.jwt, data.email);
-    //     else auth.signOut();
-    //   }
-    // });
+    const getTourTypes = async () => {
+      const data = await sendRequest(
+        `${process.env.REACT_APP_END_POINT}/api/v1/tour-types`
+      );
+      if (data) setTourTypes(data);
+    };
+    getTourTypes();
+  }, [sendRequest]);
+
+  useEffect(() => {
+    if (localStorage.getItem("travelToVNData")) {
+      const { token, user } = JSON.parse(
+        localStorage.getItem("travelToVNData")
+      );
+      login(token, user);
+    }
+  }, [login]);
+
+  useEffect(() => {
+    const authListener = auth.onAuthStateChanged(async authUser => {
+      if (authUser && !localStorage.getItem("travelToVNData")) {
+        const data = await sendRequest(
+          `${process.env.REACT_APP_END_POINT}/api/v1/users/signinWithGoogle`,
+          "POST",
+          { "Content-Type": "application/json" },
+          JSON.stringify({
+            email: authUser.email,
+            name: authUser.displayName,
+            phone: authUser.phoneNumber,
+            avatarImage: authUser.photoURL,
+            providerKey: authUser.uid,
+          })
+        );
+        if (data) {
+          console.log(data);
+          const { email, name, avatarImage } = data;
+          login(data.jwt, { email, name, avatarImage });
+        } else auth.signOut();
+      }
+    });
+    return authListener;
   }, [login, sendRequest]);
 
   return (
     <AuthContext.Provider
       value={{ token, user, login, logout, isLogin: !!user }}
     >
+      <ToastContainer
+        style={{ fontSize: "1.6rem", textAlign: "center" }}
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={true}
+      />
       <Router>
-        <Header />
+        <Header tourTypes={tourTypes} />
         <Switch>
           <Route path="/" exact>
             <Banner />
-            <Search />
+            <Search tourTypes={tourTypes} />
           </Route>
           <Route path="/tours" exact>
             <BannerInfo />
-            <Search />
             <TourList />
           </Route>
-          <Route path="/tours/:id">
+          <Route path="/tours/:tourId">
             <TourDetail />
           </Route>
           <Route path="/destination">
@@ -73,8 +109,9 @@ function App() {
           <Route path="/signup">
             <BannerInfo />
           </Route>
-          <Route path="/user/:id">
+          <Route path="/account">
             <BannerInfo />
+            <Account />
           </Route>
         </Switch>
       </Router>

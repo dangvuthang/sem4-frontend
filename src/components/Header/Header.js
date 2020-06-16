@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import SocialMediaNav from "./SocialMediaNav/SocialMediaNav";
 import MainNav from "./MainNav/MainNav";
-const Header = props => {
+const Header = ({ tourTypes }) => {
   const mainNavigation = useRef(null);
   const header = useRef(null);
 
@@ -20,7 +20,7 @@ const Header = props => {
   return (
     <header ref={header}>
       <SocialMediaNav />
-      <MainNav reference={mainNavigation} />
+      <MainNav reference={mainNavigation} tourTypes={tourTypes} />
     </header>
   );
 };

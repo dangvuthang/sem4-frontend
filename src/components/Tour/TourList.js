@@ -9,15 +9,17 @@ import ErrorModal from "../shared/Modal/ErrorModal";
 import Pagination from "./Pagination/Pagination";
 import paginate from "../../utils/paginate";
 import _ from "lodash";
-import { toast } from "react-toastify";
+import { useLocation } from "react-router-dom";
+import parseParams from "../../utils/parseParams";
 const pageSize = 6;
 const TourList = props => {
   const [isLoading, isError, sendRequest, clearError] = useRequest();
+  const location = useLocation();
   const [tours, setTours] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [sort, setSort] = useState({
     order: "asc",
-    category: "price",
+    category: "actualPrice",
   });
   const [filter, setFilter] = useState({
     search: "",
@@ -29,16 +31,28 @@ const TourList = props => {
   });
 
   useEffect(() => {
+    let url = `${process.env.REACT_APP_END_POINT}/api/v1/tours`;
+    if (location.search) {
+      url += "/search?";
+      const paramsObj = parseParams(location.search);
+      for (const key in paramsObj) {
+        url += `${key}=${paramsObj[key]}&`;
+      }
+    }
     const getTours = async () => {
-      const data = await sendRequest(
-        `${process.env.REACT_APP_END_POINT}/api/v1/tours`
-      );
-      if (data) setTours(data);
+      const data = await sendRequest(url);
+      if (data) {
+        data.forEach(d => {
+          if (d.priceDiscount === 0) d.actualPrice = d.price;
+          else d.actualPrice = ((100 - d.priceDiscount) * d.price) / 100;
+        });
+        setTours(data);
+      }
     };
     getTours();
-  }, [sendRequest, setTours]);
+  }, [sendRequest, setTours, location]);
 
-  const actualDate = (() => {
+  const actualData = (() => {
     let filterItems = tours;
     const { search, duration, minPrice, maxPrice, rating, startDate } = filter;
 
@@ -54,9 +68,9 @@ const TourList = props => {
         if (parseInt(duration) === 7) return tour.duration >= 7;
       });
     if (minPrice)
-      filterItems = filterItems.filter(tour => tour.price >= minPrice);
+      filterItems = filterItems.filter(tour => tour.actualPrice >= minPrice);
     if (maxPrice)
-      filterItems = filterItems.filter(tour => tour.price <= maxPrice);
+      filterItems = filterItems.filter(tour => tour.actualPrice <= maxPrice);
     if (rating)
       filterItems = filterItems.filter(
         tour => tour.ratingAverage >= parseInt(rating)
@@ -71,9 +85,12 @@ const TourList = props => {
     return sortedItems;
   })();
 
+  const paginateItems = paginate(currentPage, pageSize, actualData);
+  console.log(actualData);
   return (
     <>
       {isError && <ErrorModal onClear={clearError} error={isError} />}
+      {isLoading && <LoadingSpinner asOverlay />}
       <section className="tour-section">
         <div className="container">
           <div className="row">
@@ -86,20 +103,31 @@ const TourList = props => {
                 <div
                   className="tour-list"
                   style={
-                    actualDate.length === 1
+                    actualData.length === 1 || paginateItems.length === 1
                       ? { gridTemplateColumns: "40rem" }
                       : null
                   }
                 >
-                  {isLoading && <LoadingSpinner asOverlay />}
-                  {paginate(currentPage, pageSize, actualDate).map(tour => (
-                    <TourItem tour={tour} key={tour.id} />
-                  ))}
+                  {tours.length > 0 && actualData.length === 0 ? (
+                    <p
+                      style={{
+                        textAlign: "center",
+                        color: "red",
+                        fontSize: "1.8rem",
+                      }}
+                    >
+                      No tours meet your requirement. Try again !!!
+                    </p>
+                  ) : (
+                    paginateItems.map(tour => (
+                      <TourItem tour={tour} key={tour.id} />
+                    ))
+                  )}
                 </div>
                 <Pagination
                   currentPage={currentPage}
                   pageSize={pageSize}
-                  numberOfItems={actualDate.length}
+                  numberOfItems={actualData.length}
                   setCurrentPage={setCurrentPage}
                 />
               </div>

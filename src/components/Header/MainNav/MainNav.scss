@@ -63,17 +63,21 @@
     text-transform: uppercase;
     font-size: 1.3rem;
     font-weight: 500;
+    z-index: 11;
     &-item {
       &:not(:last-child) {
         border-bottom: 1px solid #ededed;
       }
     }
     &-link {
+      width: 100%;
+      color: inherit;
       padding: 1.7rem 0;
       padding-left: 3rem;
-      padding-right: 10rem;
+      padding-right: 7rem;
       color: var(--black);
       transition: all 0.3s;
+      cursor: pointer;
       &:hover {
         background-color: var(--main);
         color: #fff;
@@ -92,6 +96,7 @@
     font-weight: 400;
     box-shadow: 0 4px 16px rgba(20, 23, 28, 0.25);
     padding: 1rem 0;
+    z-index: 11;
     &__link {
       padding: 0 2rem;
       color: #29303b;

@@ -53,7 +53,6 @@
     &-paragraph {
       font-size: 1.4rem;
       color: #777777;
-
       margin: 0 auto;
       line-height: 2.4rem;
     }
@@ -61,18 +60,21 @@
 }
 
 .fixed {
-  background-color: #fff;
-  box-shadow: 0 0 1px 1px rgba(20, 23, 28, 0.1),
-    0 3px 1px 0 rgba(20, 23, 28, 0.1);
-  border-radius: 4px;
-  color: #505763;
-  padding: 3rem 2rem;
-  height: 40vh;
+  & > div {
+    background-color: #fff;
+    box-shadow: 0 0 1px 1px rgba(20, 23, 28, 0.1),
+      0 3px 1px 0 rgba(20, 23, 28, 0.1);
+    border-radius: 4px;
+    color: #505763;
+    padding: 3rem 2rem;
+  }
 }
 
 .price {
-  font-size: 3rem;
+  font-size: 3.6rem;
   margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
 }
 
 .book {
@@ -95,6 +97,12 @@
 .includes {
   & > li:not(:last-child) {
     margin-bottom: 1.7rem;
+  }
+  &__date {
+    & > div {
+      border: 1px solid #e5e5e5;
+      padding-left: 0.5rem;
+    }
   }
 }
 

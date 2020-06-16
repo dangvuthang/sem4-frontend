@@ -1,28 +1,50 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./TourDetail.scss";
 import cover from "../../../img/HoiAn01.jpg";
 import Map from "../../shared/Map/Map";
 import StarRatingComponent from "react-star-rating-component";
 import Comment from "../../shared/Comment/Comment";
+import useRequest from "../../shared/hooks/useRequest";
+import { useParams } from "react-router-dom";
+import LoadingSpinner from "../../shared/LoadingSpinner/LoadingSpinner";
+import ErrorModal from "../../shared/Modal/ErrorModal";
+import DatePicker from "react-date-picker";
 
-const imageCoverStyle = {
-  backgroundImage: `linear-gradient(
+const TourDetail = () => {
+  const [isLoading, isError, sendRequest, clearError] = useRequest();
+  const { tourId } = useParams();
+  const [tour, setTour] = useState({});
+  useEffect(() => {
+    const getTour = async () => {
+      const data = await sendRequest(
+        `${process.env.REACT_APP_END_POINT}/api/v1/tours/${tourId}`
+      );
+      if (data) {
+        if (data.priceDiscount === 0) data.actualPrice = data.price;
+        else data.actualPrice = ((100 - data.priceDiscount) * data.price) / 100;
+        setTour(data);
+      }
+    };
+    getTour();
+  }, [tourId, sendRequest]);
+
+  const imageCoverStyle = {
+    backgroundImage: `linear-gradient(
       to right bottom,
       rgba(0, 0, 0, 0.4),
       rgba(0, 0, 0, 0.4)
-    ), url(${cover})`,
-};
-const TourDetail = () => {
+    ), url(${process.env.REACT_APP_END_POINT}/images/${tour.tourImageCover})`,
+  };
+  console.log(tour);
   return (
     <>
+      {isLoading && <LoadingSpinner asOverlay />}
+      {isError && <ErrorModal onClear={clearError} error={isError} />}
       <section className="tour-detail">
         <div className="tour-detail__image-cover" style={imageCoverStyle}>
           <div className="tour-detail__image-content">
-            <h3 className="tour-detail__name">Pokemon Adventure</h3>
-            <p className="tour-detail__summary">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-              Repellat, voluptatibus.
-            </p>
+            <h3 className="tour-detail__name">{tour.name}</h3>
+            <p className="tour-detail__summary">{tour.summary}</p>
           </div>
         </div>
         <div className="tour-detail__info">
@@ -30,27 +52,20 @@ const TourDetail = () => {
             <div className="tour-detail__section">
               <div className="tour-detail__data">
                 <i className="far fa-clock tour-detail__icon"></i>
-                <span>10 days</span>
-              </div>
-              <div className="tour-detail__data">
-                <i className="far fa-calendar-alt tour-detail__icon"></i>
-                <span>January 1 2020</span>
+                <span>{tour.duration} days</span>
               </div>
               <div className="tour-detail__data">
                 <i className="far fa-flag tour-detail__icon"></i>
-                <span>4 stops</span>
+                <span>
+                  {tour.tourLocationCollection
+                    ? tour.tourLocationCollection.length
+                    : 0}{" "}
+                  stops
+                </span>
               </div>
               <div className="tour-detail__data">
                 <i className="far fa-user tour-detail__icon"></i>
-                <span>Max: 45</span>
-              </div>
-              <div className="tour-detail__data">
-                <i className="fas fa-plane-departure tour-detail__icon"></i>
-                <span>HCM City</span>
-              </div>
-              <div className="tour-detail__data">
-                <i className="fas fa-plane-arrival tour-detail__icon"></i>
-                <span>Ha Noi</span>
+                <span>Max: {tour.maxGroupSize}</span>
               </div>
             </div>
           </div>
@@ -70,14 +85,7 @@ const TourDetail = () => {
                     Description
                   </h3>
                   <p className="tour-detail__description-paragraph">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic
-                    ex praesentium quia deserunt cumque! Veritatis, officiis
-                    cupiditate. Ullam dolore accusantium dicta. Iure facere
-                    reprehenderit neque eius doloribus libero dicta possimus.
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Ullam, animi commodi. At sapiente hic, ratione illo ad vero
-                    reiciendis? Quaerat reiciendis nam optio neque iusto!
-                    Officiis atque quas beatae similique.{" "}
+                    {tour.description}
                   </p>
                 </div>
                 <div
@@ -110,7 +118,10 @@ const TourDetail = () => {
                               marginLeft: "1rem",
                             }}
                           ></i>
-                          <span>5.0 Rating</span>
+                          <span>
+                            {tour.guideId ? tour.guideId.ratingAverage : ""}{" "}
+                            Rating
+                          </span>
                         </li>
                         <li>
                           <i
@@ -122,17 +133,6 @@ const TourDetail = () => {
                             }}
                           ></i>
                           <span>20 Reviews</span>
-                        </li>
-                        <li>
-                          <i
-                            className="fas fa-suitcase"
-                            style={{
-                              color: "#111",
-                              margin: "1rem",
-                              marginLeft: "1rem",
-                            }}
-                          ></i>
-                          <span>5 Tours</span>
                         </li>
                       </ul>
                     </div>
@@ -196,56 +196,94 @@ const TourDetail = () => {
                 </div>
               </div>
               <div className="fixed" style={{ flex: "1" }}>
-                <div className="price">$12.29</div>
-                <button className="book">Book Now</button>
-                <button
-                  className="book"
-                  style={{
-                    background: "#eee",
-                    color: "var(--heading)",
-                  }}
-                >
-                  Compare Tour
-                </button>
-                <p className="refund">Refund available</p>
-                <p style={{ marginBottom: "1rem" }}>Price includes: </p>
-                <ul className="includes">
-                  <li>
-                    <i class="far fa-thumbs-up tour-detail__icon"></i>
-                    Hotel Price
-                  </li>
-                  <li>
-                    <i class="far fa-thumbs-up tour-detail__icon"></i>
-                    Breakfast, Lunch and Dinner
-                  </li>
-                  <li>
-                    <i class="far fa-thumbs-up tour-detail__icon"></i>
-                    Transportaion
-                  </li>
-                  <li>
-                    <i class="far fa-thumbs-up tour-detail__icon"></i>
-                    Accomadation
-                  </li>
-                  <li>
-                    <i class="far fa-thumbs-up tour-detail__icon"></i>
-                    Entrance Fee
-                  </li>
-                </ul>
+                <div>
+                  <div className="price">
+                    {tour.priceDiscount === 0 ? (
+                      <span>${tour.actualPrice}</span>
+                    ) : (
+                      <>
+                        <span>${tour.actualPrice}</span>
+                        <span
+                          style={{
+                            textDecoration: "line-through",
+                            fontSize: "1.8rem",
+                            color: "#8a92a3",
+                            margin: "0 1rem",
+                          }}
+                        >
+                          ${tour.price}
+                        </span>
+                        <span
+                          style={{
+                            fontSize: "1.8rem",
+                            color: "#8a92a3",
+                          }}
+                        >
+                          {tour.priceDiscount}% Off
+                        </span>
+                      </>
+                    )}
+                  </div>
+                  <button className="book">Book Now</button>
+                  <button
+                    className="book"
+                    style={{
+                      background: "#eee",
+                      color: "var(--heading)",
+                      margin: "1rem 0",
+                    }}
+                  >
+                    Compare Tour
+                  </button>
+                  <p style={{ margin: "1rem 0" }}>Price includes: </p>
+                  <ul className="includes">
+                    <li>
+                      <i className="far fa-thumbs-up tour-detail__icon"></i>
+                      Hotel Price
+                    </li>
+                    <li>
+                      <i className="far fa-thumbs-up tour-detail__icon"></i>
+                      Breakfast, Lunch and Dinner
+                    </li>
+                    <li>
+                      <i className="far fa-thumbs-up tour-detail__icon"></i>
+                      Transportaion
+                    </li>
+                    <li>
+                      <i className="far fa-thumbs-up tour-detail__icon"></i>
+                      Accomadation
+                    </li>
+                    <li>
+                      <i class="far fa-thumbs-up tour-detail__icon"></i>
+                      Entrance Fee
+                    </li>
+                  </ul>
+                  <ul className="includes">
+                    <p style={{ margin: "1rem 0" }}>Schedule: </p>
+                    <li>
+                      <i className="far fa-calendar tour-detail__icon"></i>
+                      <DatePicker
+                        value={tour.startDate ? new Date(tour.startDate) : ""}
+                        showLeadingZeros
+                        format="dd/MM/y"
+                        className="includes__date"
+                      />
+                    </li>
+                    <li>
+                      <i className="far fa-calendar-check tour-detail__icon"></i>
+                      <DatePicker
+                        value={tour.endDate ? new Date(tour.endDate) : ""}
+                        showLeadingZeros
+                        format="dd/MM/y"
+                        className="includes__date"
+                      />
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
         </div>
-
-        {/* <div style={{ backgroundColor: "#f9f9ff" }}>
-          <div className="container">
-            <h3
-              style={{ textAlign: "center", fontSize: "20px", padding: "2rem" }}
-            >
-              View Our Tour Schedule
-            </h3>
-            <Map />
-          </div>
-        </div> */}
       </section>
     </>
   );

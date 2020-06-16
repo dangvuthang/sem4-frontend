@@ -7,7 +7,6 @@ export default () => {
 
   const sendRequest = useCallback(
     async (url, method = "GET", headers = {}, body = null) => {
-      console.log({ url, method, headers, body });
       setIsLoading(true);
       let data;
       try {
