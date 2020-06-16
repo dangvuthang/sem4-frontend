@@ -10,6 +10,8 @@ const routes = [
   { name: "Home", link: "/" },
   { name: "Tours", link: "/tours" },
   { name: "Destination", link: "/destination" },
+  { name: "Compare Tours", link: "/comparetours" },
+
 ];
 const MainNav = ({ reference }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);

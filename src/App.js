@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { auth } from "./utils/firebase";
 import Search from "./components/Search/Search";
 import TourList from "./components/Tour/TourList";
+import CompareTours from "./components/CompareTours/CompareTours";
 import useRequest from "./components/shared/hooks/useRequest";
 import TourDetail from "./components/Tour/TourDetail/TourDetail";
 function App() {
@@ -63,6 +64,10 @@ function App() {
             <BannerInfo />
             <Search />
             <TourList />
+          </Route>
+          <Route path="/comparetours" exact>
+            <BannerInfo />
+           <CompareTours />
           </Route>
           <Route path="/tours/:id">
             <TourDetail />
