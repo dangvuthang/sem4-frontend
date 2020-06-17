@@ -1,3 +1,4 @@
+/*
 import firebase from "firebase";
 import "firebase/auth";
 const firebaseConfig = {
@@ -24,3 +25,4 @@ facebookProvider.setCustomParameters({ prompt: "select_account" });
 export const signInWithGoogle = () => auth.signInWithPopup(googleProvider);
 
 export const signInWithFacebook = () => auth.signInWithPopup(facebookProvider);
+*/

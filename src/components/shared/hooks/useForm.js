@@ -30,8 +30,8 @@ const useForm = inputField => {
   };
 
   const buttonDisabled = () => {
-    const disabled = Object.keys(errorMsg).length > 0;
-    return disabled;
+    const isDisabled = Object.keys(errorMsg).length > 0;
+    return isDisabled;
   };
 
   return [

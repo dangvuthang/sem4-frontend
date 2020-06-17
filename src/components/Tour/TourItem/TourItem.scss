@@ -5,14 +5,16 @@
   border-radius: 3px;
   &__heading {
     width: 100%;
+    position: relative;
   }
   &__image {
     width: 400px;
+    height: 240px;
     object-fit: cover;
   }
   &__body {
     padding: 1rem 2rem;
-    font-size: 1.5rem;
+    font-size: 1.7rem;
     color: #7f7f7f;
   }
   &__name {

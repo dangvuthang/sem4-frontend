@@ -12,7 +12,7 @@ const Sort = ({ sort, setSort }) => {
       >
         <option value="name">Title</option>
         <option value="ratingAverage">Rating</option>
-        <option value="price">Price</option>
+        <option value="actualPrice">Price</option>
         <option value="duration">Duration</option>
       </select>
       <select
