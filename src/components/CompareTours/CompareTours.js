@@ -1,6 +1,6 @@
 import React from "react";
-import "./CompareTours.scss";
-import "bootstrap/dist/css/bootstrap.css";
+import  "./CompareTours.scss";
+import styles from "./CompareTours.module.css";
 import src from "../../img/HoiAn01.jpg";
 const CompareTours = (props) => {
   return (
@@ -8,7 +8,7 @@ const CompareTours = (props) => {
       <div className="container">
         <div class="container backpack-container">
           <div class="row">
-            <div class="col-md-12" id="headerPanel">
+            <div class={`${styles.btn} ${styles.btn-primary}`} id="headerPanel">
               <h3 align="center">Welcome to your Backpack</h3>
               <h3 align="center">
                 Compare your selections &amp; narrow down the best tour for you!
