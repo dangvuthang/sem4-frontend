@@ -1,7 +1,8 @@
 import React, { useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
 import logo from "../../../img/logo.png";
 import AuthContext from "../../shared/context/authContext";
-import { NavLink, Link, useLocation, useHistory } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import AuthModal from "../../shared/Modal/AuthModal";
 
 import "./MainNav.scss";
@@ -19,7 +20,6 @@ const MainNav = ({ reference, tourTypes }) => {
     e.preventDefault();
     setIsModalOpen(true);
   };
-
   const handleOnModalClose = e => {
     setIsModalOpen(false);
   };
@@ -147,7 +147,7 @@ const MainNav = ({ reference, tourTypes }) => {
                       <li className="user-dropdown__item">
                         <Link
                           className="user-dropdown__link user-dropdown__info"
-                          to="/user"
+                          to="/account?myPurchase"
                         >
                           Purchase History
                         </Link>

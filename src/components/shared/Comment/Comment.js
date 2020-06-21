@@ -1,13 +1,14 @@
 import React from "react";
 import "./Comment.scss";
 import StarRatingComponent from "react-star-rating-component";
-const Comment = props => {
+import moment from "moment";
+const Comment = ({ review }) => {
   return (
     <div className="comment">
       <div className="comment__user">
         <img
-          src="https://randomuser.me/api/portraits/men/1.jpg"
-          alt="Guide"
+          src={`${process.env.REACT_APP_END_POINT}/images/${review.userId.avatarImage}`}
+          alt="User"
           style={{
             borderRadius: "50%",
             width: "50px",
@@ -17,22 +18,18 @@ const Comment = props => {
         />
         <div>
           <p className="comment__user-time" style={{ color: "#686f7a" }}>
-            2 months ago
+            {moment(review.createdAt).fromNow()}
           </p>
-          <p className="comment__user-name">Mark King</p>
+          <p className="comment__user-name">{review.userId.name}</p>
         </div>
       </div>
       <div className="comment__content">
         <StarRatingComponent
           className="comment__content-rating"
-          value={4}
+          value={review.rating}
           name="starRating"
         />
-        <p className="comment__content-thought">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi
-          officiis neque, et nam est optio ipsa excepturi commodi quod ut omnis
-          odio ipsum nihil? Hic corrupti facilis quidem praesentium nostrum!
-        </p>
+        <p className="comment__content-thought">{review.review}</p>
       </div>
     </div>
   );

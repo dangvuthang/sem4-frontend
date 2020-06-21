@@ -1,5 +1,5 @@
 import React from "react";
-import Label from "../Label/Label";
+import Label from "../../shared/Label/Label";
 import DatePicker from "react-date-picker";
 import StarRatingComponent from "react-star-rating-component";
 import "./Filter.scss";
@@ -7,7 +7,6 @@ const Filter = ({ filter, setFilter }) => {
   const { search, duration, minPrice, maxPrice, rating, startDate } = filter;
   const handleFilterChange = e => {
     const element = e.target;
-    console.log(element);
     if (element) setFilter({ ...filter, [element.id]: element.value });
   };
   return (

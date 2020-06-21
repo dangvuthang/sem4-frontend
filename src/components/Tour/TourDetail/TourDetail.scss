@@ -86,6 +86,11 @@
   padding: 1rem 0;
   font-size: 1.4rem;
   margin-bottom: 0.7rem;
+  transition: all 0.3s;
+  &:hover,
+  &:active {
+    background-color: darken(#4dbf1c, 5%);
+  }
 }
 
 .refund {

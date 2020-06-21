@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import moment from "moment";
 import "./TourItem.scss";
 const TourItem = ({ tour }) => {
   return (
@@ -38,7 +39,7 @@ const TourItem = ({ tour }) => {
           </div>
           <div className="tour-card__data">
             <i className="far fa-calendar-alt tour-card__icon"></i>
-            <span>{tour.startDate.split("-").reverse().join("/")}</span>
+            <span>{moment(tour.startDate).format("DD/MM/YYYY")}</span>
           </div>
         </div>
         <div className="tour-card__section">
@@ -56,9 +57,9 @@ const TourItem = ({ tour }) => {
             <i className="far fa-star tour-card__icon"></i>
             <span>
               {tour.ratingAverage} (
-              {tour.reviewTourCollection.length > 1
-                ? `${tour.reviewTourCollection.length} Reviews`
-                : `${tour.reviewTourCollection.length} Review`}
+              {tour.numberOfRatings > 1
+                ? `${tour.numberOfRatings} Reviews`
+                : `${tour.numberOfRatings} Review`}
               )
             </span>
           </div>
@@ -67,7 +68,7 @@ const TourItem = ({ tour }) => {
             <span>
               Price: $
               {tour.priceDiscount === 0 ? (
-                tour.price
+                tour.price.toFixed(2)
               ) : (
                 <>
                   <span
@@ -79,7 +80,9 @@ const TourItem = ({ tour }) => {
                   >
                     {tour.price}
                   </span>
-                  <span style={{ fontWeight: 700 }}>{tour.actualPrice}</span>
+                  <span style={{ fontWeight: 700 }}>
+                    ${tour.actualPrice.toFixed(2)}
+                  </span>
                 </>
               )}
             </span>

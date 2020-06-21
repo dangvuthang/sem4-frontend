@@ -48,6 +48,69 @@
     padding: 1.3rem 4rem;
     background-color: #f44336;
     color: #fff;
+    &:hover,
+    &:active {
+      background-color: darken(#f44336, 10%);
+    }
+    &:disabled {
+      box-shadow: none;
+      cursor: not-allowed;
+      background: #ccc;
+      color: #979797;
+      border-color: #ccc;
+      cursor: not-allowed;
+    }
+  }
+  &--booking {
+    padding: 1.3rem 4rem;
+    background-color: #00c851;
+    color: #fff;
+    &:hover,
+    &:active {
+      background-color: darken(#00c851, 10%);
+    }
+    &:disabled {
+      box-shadow: none;
+      cursor: not-allowed;
+      background: #ccc;
+      color: #979797;
+      border-color: #ccc;
+      cursor: not-allowed;
+    }
+  }
+  &--muted {
+    padding: 1.3rem 4rem;
+    background-color: #c1c1c1;
+    color: #fff;
+    &:hover,
+    &:active {
+      background-color: darken(#c1c1c1, 10%);
+    }
+    &:disabled {
+      box-shadow: none;
+      cursor: not-allowed;
+      background: #ccc;
+      color: #979797;
+      border-color: #ccc;
+      cursor: not-allowed;
+    }
+  }
+  &--info {
+    padding: 1.3rem 4rem;
+    background-color: #2196f3;
+    color: #fff;
+    &:hover,
+    &:active {
+      background-color: darken(#2196f3, 10%);
+    }
+    &:disabled {
+      box-shadow: none;
+      cursor: not-allowed;
+      background: #ccc;
+      color: #979797;
+      border-color: #ccc;
+      cursor: not-allowed;
+    }
   }
 }
 

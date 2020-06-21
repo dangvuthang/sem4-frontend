@@ -66,6 +66,7 @@ const TourList = props => {
         if (parseInt(duration) === 6)
           return tour.duration > 4 && tour.duration <= 7;
         if (parseInt(duration) === 7) return tour.duration >= 7;
+        return tour;
       });
     if (minPrice)
       filterItems = filterItems.filter(tour => tour.actualPrice >= minPrice);
@@ -86,11 +87,10 @@ const TourList = props => {
   })();
 
   const paginateItems = paginate(currentPage, pageSize, actualData);
-  console.log(actualData);
+
   return (
     <>
       {isError && <ErrorModal onClear={clearError} error={isError} />}
-      {isLoading && <LoadingSpinner asOverlay />}
       <section className="tour-section">
         <div className="container">
           <div className="row">
@@ -101,14 +101,14 @@ const TourList = props => {
               <div className="tour-result">
                 <Sort sort={sort} setSort={setSort} />
                 <div
-                  className="tour-list"
-                  style={
-                    actualData.length === 1 || paginateItems.length === 1
-                      ? { gridTemplateColumns: "40rem" }
-                      : null
-                  }
+                  className={`tour-list ${
+                    paginateItems.length === 1 || actualData.length === 1
+                      ? "tour-list--one"
+                      : ""
+                  }`}
                 >
-                  {tours.length > 0 && actualData.length === 0 ? (
+                  {isLoading && <LoadingSpinner asOverlay />}
+                  {tours.length >= 0 && actualData.length === 0 ? (
                     <p
                       style={{
                         textAlign: "center",
