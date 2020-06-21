@@ -1,0 +1,42 @@
+.account-purchase {
+  &__title {
+    text-align: center;
+    border: 1px solid #dee2e7;
+    padding: 1rem 0;
+    margin-bottom: 1rem;
+  }
+  &__table {
+    width: 100%;
+    font-size: 1.5rem;
+    border-spacing: 0;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+    margin-bottom: 0.5rem;
+    & > thead:first-child > tr:first-child > td,
+    & > thead:first-child > tr:first-child > th {
+      border-top: 0;
+    }
+    & > tbody > tr > td,
+    & > tbody > tr > th,
+    & > tfoot > tr > td,
+    & > tfoot > tr > th,
+    & > thead > tr > td,
+    & > thead > tr > th {
+      border: 1px solid #ddd;
+    }
+    & > tbody > tr > td,
+    & > tbody > tr > th,
+    & > tfoot > tr > td,
+    & > tfoot > tr > th,
+    & > thead > tr > td,
+    & > thead > tr > th {
+      padding: 8px;
+      line-height: 1.42857143;
+    }
+  }
+  &__note {
+    text-align: right;
+    color: red;
+    font-size: 1.3rem;
+  }
+}
