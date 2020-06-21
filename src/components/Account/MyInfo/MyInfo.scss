@@ -1,0 +1,38 @@
+.account-info {
+  &__title {
+    text-align: center;
+    border: 1px solid #dee2e7;
+    padding: 1rem 0;
+    margin-bottom: 1rem;
+  }
+  &__form {
+    border: 1px solid #dee2e7;
+    padding: 3rem 8rem;
+    &:not(:last-child) {
+      margin-bottom: 2rem;
+    }
+  }
+  &__save {
+    text-align: right;
+    margin-top: 1rem;
+    &-btn {
+      font-size: 1.6rem;
+      padding: 1rem 2.3rem;
+      background-color: #2196f3;
+      color: #fff;
+      border-radius: 8px;
+      transition: all 0.2s;
+      &:hover,
+      &:active {
+        background-color: darken($color: #2196f3, $amount: 10%);
+      }
+      &:disabled {
+        box-shadow: none;
+        cursor: not-allowed;
+        background: #ccc;
+        color: #979797;
+        border-color: #ccc;
+      }
+    }
+  }
+}
