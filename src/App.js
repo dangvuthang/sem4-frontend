@@ -13,12 +13,13 @@ import TourDetail from "./components/Tour/TourDetail/TourDetail";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import Account from "./components/Account/Account";
+import Compare from "./components/Compare/Compare";
 function App() {
   const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
   const [isLoading, isError, sendRequest, clearError] = useRequest();
   const [tourTypes, setTourTypes] = useState([]);
-
+  const [chosenTour, setChosenTour] = useState([]);
   const login = useCallback((token, user) => {
     setToken(token);
     setUser(user);
@@ -101,10 +102,11 @@ function App() {
             <TourList />
           </Route>
           <Route path="/tours/:tourId">
-            <TourDetail />
+            <TourDetail setChosenTour={setChosenTour} chosenTour={chosenTour} />
           </Route>
-          <Route path="/destination">
+          <Route path="/compare">
             <BannerInfo />
+            <Compare setChosenTour={setChosenTour} chosenTour={chosenTour} />
           </Route>
           <Route path="/signup">
             <BannerInfo />

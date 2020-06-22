@@ -141,7 +141,15 @@ const Account = () => {
                         to="/account?myReview"
                         className="account-control__link"
                       >
-                        My Rating &amp; Review
+                        Write Rating &amp; Review
+                      </Link>
+                    </li>
+                    <li className="account-control__item">
+                      <Link
+                        to="/account?myReview"
+                        className="account-control__link"
+                      >
+                        View Rating &amp; Review
                       </Link>
                     </li>
                     <li className="account-control__item">

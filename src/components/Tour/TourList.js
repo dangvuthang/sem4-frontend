@@ -100,6 +100,7 @@ const TourList = props => {
             <div className="col-9">
               <div className="tour-result">
                 <Sort sort={sort} setSort={setSort} />
+                {isLoading && <LoadingSpinner asOverlay />}
                 <div
                   className={`tour-list ${
                     paginateItems.length === 1 || actualData.length === 1
@@ -107,7 +108,6 @@ const TourList = props => {
                       : ""
                   }`}
                 >
-                  {isLoading && <LoadingSpinner asOverlay />}
                   {tours.length >= 0 && actualData.length === 0 ? (
                     <p
                       style={{

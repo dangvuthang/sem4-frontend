@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import "./BookingModal.scss";
 import Modal from "./Modal";
 import _ from "lodash";
@@ -23,6 +23,7 @@ const BookingModal = ({ show, onClear, tour, user }) => {
       })
     );
     if (data) {
+      onClear();
       toast.success(data.message);
     }
   };

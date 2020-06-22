@@ -11,8 +11,8 @@ import DatePicker from "react-date-picker";
 import BookingModal from "../../shared/Modal/BookingModal";
 import AuthContext from "../../shared/context/authContext";
 import { toast } from "react-toastify";
-
-const TourDetail = () => {
+import _ from "lodash";
+const TourDetail = ({ chosenTour, setChosenTour }) => {
   const [isLoading, isError, sendRequest, clearError] = useRequest();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const auth = useContext(AuthContext);
@@ -27,6 +27,13 @@ const TourDetail = () => {
     setIsModalOpen(false);
   };
 
+  const handleCompareTour = () => {
+    if (chosenTour.find(cTour => cTour.id === tour.id))
+      return toast.success("Tour already in Compare");
+    setChosenTour([...chosenTour, tour]);
+    toast.success("Added Tour To Compare");
+  };
+
   useEffect(() => {
     const getTour = async () => {
       const data = await sendRequest(
@@ -37,6 +44,7 @@ const TourDetail = () => {
         else data.actualPrice = ((100 - data.priceDiscount) * data.price) / 100;
         setTour(data);
       }
+      console.log(data);
     };
     getTour();
   }, [tourId, sendRequest]);
@@ -195,7 +203,7 @@ const TourDetail = () => {
                     >
                       Tour Location &amp; Schedule
                     </h3>
-                    {/* <Map location={tour.tourLocationCollection} /> */}
+                    <Map location={tour.tourLocationCollection} />
                   </div>
                   <div
                     className="tour-detail__guide"
@@ -218,7 +226,11 @@ const TourDetail = () => {
                         className="tour-detail__rating-start"
                       />
                       <p style={{ marginBottom: "1rem" }}>Tour Rating</p>
-                      {tour.reviewTourCollection.map(review => (
+                      {_.orderBy(
+                        tour.reviewTourCollection,
+                        ["createdAt"],
+                        "asc"
+                      ).map(review => (
                         <Comment review={review} key={review.id} />
                       ))}
                     </div>
@@ -274,6 +286,7 @@ const TourDetail = () => {
                         color: "var(--heading)",
                         margin: "1rem 0",
                       }}
+                      onClick={handleCompareTour}
                     >
                       Compare Tour
                     </button>

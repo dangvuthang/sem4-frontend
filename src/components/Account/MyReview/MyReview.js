@@ -21,7 +21,7 @@ const MyReview = ({ user }) => {
           booking =>
             booking.tourId.reviewTourCollection.filter(
               review => review.userId.id === user.id
-            ).length === 1
+            ).length !== 1
         );
         setData(checkIfUserHadReviewed);
       }
@@ -46,7 +46,7 @@ const MyReview = ({ user }) => {
           onCancel={handleCloseModal}
           tour={chosenTour}
           user={user}
-        ></ReviewModal>
+        />
       )}
       <div className="account-review">
         <div className="account-review__title">
