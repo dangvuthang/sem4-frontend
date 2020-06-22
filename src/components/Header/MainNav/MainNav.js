@@ -10,7 +10,7 @@ import "./MainNav.scss";
 const routes = [
   { name: "Home", link: "/" },
   { name: "Tours", link: "/tours" },
-  { name: "Destination", link: "/destination" },
+  { name: "Compare", link: "/compare" },
 ];
 
 const MainNav = ({ reference, tourTypes }) => {
