@@ -36,3 +36,10 @@
     }
   }
 }
+
+.myinfo__description {
+  color: #999;
+  & > h4 {
+    font-size: 1.2rem;
+  }
+}

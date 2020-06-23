@@ -15,8 +15,9 @@ const MyReview = ({ user }) => {
       );
       if (data) {
         const checkIfUserCanReview = data.filter(
-          booking => new Date(booking.tourId.endDate) < new Date()
+          booking => new Date(booking.endDate) < new Date()
         );
+        console.log(checkIfUserCanReview);
         const checkIfUserHadReviewed = checkIfUserCanReview.filter(
           booking =>
             booking.tourId.reviewTourCollection.filter(
@@ -50,7 +51,7 @@ const MyReview = ({ user }) => {
       )}
       <div className="account-review">
         <div className="account-review__title">
-          <h3 style={{ fontSize: "1.6rem" }}>My Review & Rating</h3>
+          <h3 style={{ fontSize: "1.6rem" }}>Write Review & Rating</h3>
           <p style={{ fontSize: "1.5rem" }}>
             Tell us what you think about the tour and guide
           </p>
@@ -72,7 +73,7 @@ const MyReview = ({ user }) => {
                     <div className="account-review__card-detail">
                       <i className="far fa-calendar tour-detail__icon"></i>
                       <DatePicker
-                        value={new Date(item.tourId.startDate)}
+                        value={new Date(item.startDate)}
                         showLeadingZeros
                         format="dd/MM/y"
                         className="account-review__card-date"
@@ -81,7 +82,7 @@ const MyReview = ({ user }) => {
                     <div className="account-review__card-detail">
                       <i className="far fa-calendar-check tour-detail__icon"></i>
                       <DatePicker
-                        value={new Date(item.tourId.endDate)}
+                        value={new Date(item.endDate)}
                         showLeadingZeros
                         format="dd/MM/y"
                         className="account-review__card-date"

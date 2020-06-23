@@ -4,6 +4,7 @@ import Calendar from "react-calendar";
 import useRequest from "../../shared/hooks/useRequest";
 import ErrorModal from "../../shared/Modal/ErrorModal";
 import DatePicker from "react-date-picker";
+import _ from "lodash";
 const MySchedule = ({ user }) => {
   const [isLoading, isError, sendRequest, clearError] = useRequest();
   const [bookings, setBookings] = useState([]);
@@ -13,11 +14,10 @@ const MySchedule = ({ user }) => {
       const data = await sendRequest(
         `${process.env.REACT_APP_END_POINT}/api/v1/bookings/${user.id}`
       );
+      console.log(data);
       if (data) {
         setBookings(
-          data.filter(
-            booking => new Date(booking.tourId.startDate) > new Date()
-          )
+          data.filter(booking => new Date(booking.startDate) > new Date())
         );
       }
     };
@@ -46,7 +46,7 @@ const MySchedule = ({ user }) => {
                     No upcoming tours in your schedule
                   </p>
                 ) : (
-                  bookings.map(booking => (
+                  _.orderBy(bookings, ["createdAt"], "asc").map(booking => (
                     <div className="account-schedule__card" key={booking.id}>
                       <h3 className="account-schedule__card-name">
                         {booking.tourId.name}
@@ -60,7 +60,7 @@ const MySchedule = ({ user }) => {
                         <li style={{ marginBottom: "1rem" }}>
                           <i className="far fa-calendar tour-detail__icon"></i>
                           <DatePicker
-                            value={new Date(booking.tourId.startDate)}
+                            value={new Date(booking.startDate)}
                             showLeadingZeros
                             format="dd/MM/y"
                             className="includes__date"
@@ -69,7 +69,7 @@ const MySchedule = ({ user }) => {
                         <li style={{ marginBottom: "1rem" }}>
                           <i className="far fa-calendar-check tour-detail__icon"></i>
                           <DatePicker
-                            value={new Date(booking.tourId.endDate)}
+                            value={new Date(booking.endDate)}
                             showLeadingZeros
                             format="dd/MM/y"
                             className="includes__date"
@@ -80,8 +80,8 @@ const MySchedule = ({ user }) => {
                         className="account-schedule__card-view"
                         onClick={() =>
                           setDate([
-                            new Date(booking.tourId.startDate),
-                            new Date(booking.tourId.endDate),
+                            new Date(booking.startDate),
+                            new Date(booking.endDate),
                           ])
                         }
                       >

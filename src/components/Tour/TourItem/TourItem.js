@@ -6,7 +6,7 @@ const TourItem = ({ tour }) => {
   return (
     <div className="tour-card">
       <div className="tour-card__heading">
-        <Link to={`/tours/${tour.id}`}>
+        <Link to={`/tours/${tour.id}`} className="tour-card__link">
           <img
             className="tour-card__image"
             src={`${process.env.REACT_APP_END_POINT}/images/${tour.tourImageCover}`}

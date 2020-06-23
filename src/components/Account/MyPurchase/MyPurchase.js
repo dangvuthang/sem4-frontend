@@ -111,8 +111,8 @@ const MyPurchase = ({ user }) => {
                   {moment(booking.createdAt).format("DD/MM/YYYY, hh:mm:ss")}
                 </td>
                 <td>{booking.tourId.name}</td>
-                <td>{moment(booking.tourId.startDate).format("DD/MM/YYYY")}</td>
-                <td>{moment(booking.tourId.endDate).format("DD/MM/YYYY")}</td>
+                <td>{moment(booking.startDate).format("DD/MM/YYYY")}</td>
+                <td>{moment(booking.endDate).format("DD/MM/YYYY")}</td>
                 <td style={{ textAlign: "center" }}>{booking.quantity}</td>
                 <td style={{ textAlign: "center" }}>
                   ${booking.price.toFixed(2)}
@@ -122,9 +122,8 @@ const MyPurchase = ({ user }) => {
                     className="btn btn--error"
                     style={{ padding: "1rem 1.5rem" }}
                     disabled={
-                      new Date(booking.tourId.startDate) < Date.now() ||
-                      Date.now() >
-                        moment(booking.tourId.startDate).subtract(30, "d")
+                      new Date(booking.startDate) < Date.now() ||
+                      Date.now() > moment(booking.startDate).subtract(30, "d")
                     }
                     onClick={handleOpenModal.bind(this, booking)}
                   >

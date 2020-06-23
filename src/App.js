@@ -14,6 +14,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import Account from "./components/Account/Account";
 import Compare from "./components/Compare/Compare";
+import Guide from "./components/Guide/Guide";
 function App() {
   const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
@@ -103,6 +104,9 @@ function App() {
           </Route>
           <Route path="/tours/:tourId">
             <TourDetail setChosenTour={setChosenTour} chosenTour={chosenTour} />
+          </Route>
+          <Route path="/guides/:guideId">
+            <Guide />
           </Route>
           <Route path="/compare">
             <BannerInfo />

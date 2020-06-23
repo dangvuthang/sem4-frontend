@@ -28,7 +28,7 @@ const Account = () => {
     };
     getCurrentUser();
   }, [auth.user, sendRequest]);
-
+  console.log(user);
   const handleLogout = () => {
     history.push("/");
     auth.logout();
@@ -54,7 +54,7 @@ const Account = () => {
       toast.success("Successfully deactive your account");
     }
   };
-
+  console.log(user);
   return (
     <>
       {isLoading && <LoadingSpinner asOverlay />}
@@ -120,14 +120,16 @@ const Account = () => {
                         My Account
                       </Link>
                     </li>
-                    <li className="account-control__item">
-                      <Link
-                        to="/account?myPurchase"
-                        className="account-control__link"
-                      >
-                        Purchase History
-                      </Link>
-                    </li>
+                    {user.roleId.id === 3 && (
+                      <li className="account-control__item">
+                        <Link
+                          to="/account?myPurchase"
+                          className="account-control__link"
+                        >
+                          Purchase History
+                        </Link>
+                      </li>
+                    )}
                     <li className="account-control__item">
                       <Link
                         to="/account?mySchedule"
@@ -142,14 +144,6 @@ const Account = () => {
                         className="account-control__link"
                       >
                         Write Rating &amp; Review
-                      </Link>
-                    </li>
-                    <li className="account-control__item">
-                      <Link
-                        to="/account?myReview"
-                        className="account-control__link"
-                      >
-                        View Rating &amp; Review
                       </Link>
                     </li>
                     <li className="account-control__item">

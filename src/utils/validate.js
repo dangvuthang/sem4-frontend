@@ -30,5 +30,6 @@ export default ({ id, value }) => {
     if (value === "") return "Confirm Password is required";
     if (value.length < 6) return "Make sure your password matches";
   }
+
   return "";
 };

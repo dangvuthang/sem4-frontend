@@ -91,6 +91,14 @@
   &:active {
     background-color: darken(#4dbf1c, 5%);
   }
+  &:disabled {
+    box-shadow: none;
+    cursor: not-allowed;
+    background: #ccc;
+    color: #979797;
+    border-color: #ccc;
+    cursor: not-allowed;
+  }
 }
 
 .refund {

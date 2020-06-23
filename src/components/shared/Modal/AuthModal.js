@@ -52,6 +52,9 @@ const LoginModal = ({ isModalOpen, handleOnModalClose }) => {
         const { email, name, avatarImage, jwt } = data;
         auth.login(jwt, { email, name, avatarImage });
         handleOnModalClose();
+        const resetValue = { email: "", password: "" };
+        setInputValue(resetValue);
+        setErrorMsg(resetValue);
       }
     }
     if (!isLogin) {
@@ -77,6 +80,16 @@ const LoginModal = ({ isModalOpen, handleOnModalClose }) => {
           setTimeout(() => {
             auth.login(jwt, { email, name, avatarImage });
             handleOnModalClose();
+            const resetValue = {
+              email: "",
+              password: "",
+              confirmPassword: "",
+              name: "",
+              phone: "",
+            };
+            setIsLogin(true);
+            setInputValue({ ...resetValue, avatar: "" });
+            setErrorMsg(resetValue);
           }, 3000);
         } else {
           auth.login(jwt, { email, name, avatarImage });
@@ -92,6 +105,7 @@ const LoginModal = ({ isModalOpen, handleOnModalClose }) => {
       const resetValue = {
         email: "",
         password: "",
+        confirmPassword: "",
         name: "",
         phone: "",
       };
@@ -154,6 +168,14 @@ const LoginModal = ({ isModalOpen, handleOnModalClose }) => {
         {!isLogin && (
           <>
             <Input
+              id="confirmPassword"
+              label="Confirm Password"
+              type="password"
+              value={inputValue.confirmPassword}
+              onChange={handleOnChange}
+              errorMsg={errorMsg.confirmPassword}
+            />
+            <Input
               id="name"
               label="Name"
               type="text"
@@ -187,7 +209,7 @@ const LoginModal = ({ isModalOpen, handleOnModalClose }) => {
           type="submit"
           className="auth-content__signin"
           disabled={buttonDisabled()}
-          style={isLogin ? null : { margin: "3rem 0" }}
+          style={isLogin ? null : { margin: "2rem 0" }}
         >
           {isLogin ? "Sign in" : "Sign up"}
         </button>

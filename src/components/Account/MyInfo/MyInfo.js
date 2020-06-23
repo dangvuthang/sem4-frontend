@@ -9,6 +9,7 @@ import useRequest from "../../shared/hooks/useRequest";
 import AuthContext from "../../shared/context/authContext";
 import ErrorModal from "../../shared/Modal/ErrorModal";
 import LoadingSpinner from "../../shared/LoadingSpinner/LoadingSpinner";
+import Label from "../../shared/Label/Label";
 const MyInfo = ({ user }) => {
   const [inputValue, errorMsg, handleOnChange] = useForm({
     email: user.email,
@@ -116,6 +117,9 @@ const MyInfo = ({ user }) => {
               onChange={handleOnChange}
               errorMsg={errorMsg.phone}
             />
+            <Label name="Description" className="myinfo__description">
+              <textarea id="tourComment" className="review-content__comment" />
+            </Label>
             <ImageUpload
               file={inputValue.avatar}
               handleOnImageChange={handleOnChange}

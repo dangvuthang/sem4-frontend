@@ -7,9 +7,16 @@ import useRequest from "../hooks/useRequest";
 import ErrorModal from "./ErrorModal";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import { toast } from "react-toastify";
-const BookingModal = ({ show, onClear, tour, user }) => {
+const BookingModal = ({
+  show,
+  onClear,
+  tour,
+  user,
+  numberOfBookings,
+  setNumberOfBookings,
+  setIsBook,
+}) => {
   const [isLoading, isError, sendRequest, clearError] = useRequest();
-  const [numberOfBookings, setNumberOfBookings] = useState(1);
   const handleBookingTour = async (token, address) => {
     const data = await sendRequest(
       `${process.env.REACT_APP_END_POINT}/api/v1/bookings/${user.email}`,
@@ -24,6 +31,7 @@ const BookingModal = ({ show, onClear, tour, user }) => {
     );
     if (data) {
       onClear();
+      setIsBook(true);
       toast.success(data.message);
     }
   };

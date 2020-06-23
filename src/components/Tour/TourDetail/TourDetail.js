@@ -4,7 +4,7 @@ import Map from "../../shared/Map/Map";
 import StarRatingComponent from "react-star-rating-component";
 import Comment from "../../shared/Comment/Comment";
 import useRequest from "../../shared/hooks/useRequest";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import LoadingSpinner from "../../shared/LoadingSpinner/LoadingSpinner";
 import ErrorModal from "../../shared/Modal/ErrorModal";
 import DatePicker from "react-date-picker";
@@ -14,6 +14,8 @@ import { toast } from "react-toastify";
 import _ from "lodash";
 const TourDetail = ({ chosenTour, setChosenTour }) => {
   const [isLoading, isError, sendRequest, clearError] = useRequest();
+  const [numberOfBookings, setNumberOfBookings] = useState(1);
+  const [isBook, setIsBook] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const auth = useContext(AuthContext);
   const { tourId } = useParams();
@@ -65,6 +67,9 @@ const TourDetail = ({ chosenTour, setChosenTour }) => {
           onClear={handleOnModalClose}
           tour={tour}
           user={auth.user}
+          numberOfBookings={numberOfBookings}
+          setNumberOfBookings={setNumberOfBookings}
+          setIsBook={setIsBook}
         />
       )}
       {isLoading && <LoadingSpinner asOverlay />}
@@ -132,15 +137,17 @@ const TourDetail = ({ chosenTour, setChosenTour }) => {
                     </h3>
                     <div style={{ display: "flex", alignItems: "center" }}>
                       <div style={{ flex: "1" }}>
-                        <img
-                          src={`${process.env.REACT_APP_END_POINT}/images/${tour.guideId.userId.avatarImage}`}
-                          alt="Guide"
-                          style={{
-                            borderRadius: "50%",
-                            width: "100px",
-                            height: "100px",
-                          }}
-                        />
+                        <Link to={`/guides/${tour.guideId.id}`}>
+                          <img
+                            src={`${process.env.REACT_APP_END_POINT}/images/${tour.guideId.userId.avatarImage}`}
+                            alt="Guide"
+                            style={{
+                              borderRadius: "50%",
+                              width: "100px",
+                              height: "100px",
+                            }}
+                          />
+                        </Link>
                         <ul>
                           <li>
                             <i
@@ -177,15 +184,17 @@ const TourDetail = ({ chosenTour, setChosenTour }) => {
                         </ul>
                       </div>
                       <div style={{ flex: "4" }}>
-                        <p
-                          style={{
-                            color: "var(--main)",
-                            marginBottom: "2rem",
-                            fontSize: "2rem",
-                          }}
-                        >
-                          {tour.guideId.userId.name}
-                        </p>
+                        <Link to={`/guides/${tour.guideId.id}`}>
+                          <p
+                            style={{
+                              color: "var(--main)",
+                              marginBottom: "2rem",
+                              fontSize: "2rem",
+                            }}
+                          >
+                            {tour.guideId.userId.name}
+                          </p>
+                        </Link>
                         <p>{tour.guideId.description}</p>
                       </div>
                     </div>
@@ -203,7 +212,7 @@ const TourDetail = ({ chosenTour, setChosenTour }) => {
                     >
                       Tour Location &amp; Schedule
                     </h3>
-                    <Map location={tour.tourLocationCollection} />
+                    {/* <Map location={tour.tourLocationCollection} /> */}
                   </div>
                   <div
                     className="tour-detail__guide"
@@ -274,10 +283,18 @@ const TourDetail = ({ chosenTour, setChosenTour }) => {
                       }}
                     >
                       Available for booking:{" "}
-                      {tour.maxGroupSize - tour.currentGroupSize}
+                      {isBook
+                        ? tour.maxGroupSize -
+                          tour.currentGroupSize -
+                          numberOfBookings
+                        : tour.maxGroupSize - tour.currentGroupSize}
                     </p>
-                    <button className="book" onClick={handleOnModalOpen}>
-                      Book Now
+                    <button
+                      className="book"
+                      onClick={handleOnModalOpen}
+                      disabled={isBook}
+                    >
+                      {isBook ? "Already Booked" : "Book Now"}
                     </button>
                     <button
                       className="book"
