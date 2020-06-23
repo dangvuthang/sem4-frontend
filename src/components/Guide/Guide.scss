@@ -1,0 +1,69 @@
+.guide-section {
+  padding: 4rem 0;
+}
+
+.guide-avatar {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  flex-direction: column;
+  &__rating {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    font-size: 2rem;
+    padding-left: 5rem;
+  }
+}
+
+.guide-bio {
+  padding-bottom: 2.4rem;
+  &__profile {
+    color: #73726c;
+    text-transform: uppercase;
+    font-size: 1.6rem;
+  }
+  &__name {
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02rem;
+    font-size: 3rem;
+  }
+  &__job {
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02rem;
+    font-size: 1.6rem;
+    padding: 8px 0;
+  }
+  &__about {
+    padding: 4.8rem 0 1.6rem;
+    font-size: 1.8rem;
+  }
+  &__description {
+    font-size: 1.6rem;
+    font-weight: 400;
+    max-width: 70rem;
+  }
+}
+
+.guide-tours {
+  padding-bottom: 2.4rem;
+  &__total {
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02rem;
+    font-size: 1.6rem;
+    padding: 8px 0;
+  }
+}
+
+.guide-reviews {
+  &__title {
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02rem;
+    font-size: 1.6rem;
+    padding: 8px 0;
+  }
+}
