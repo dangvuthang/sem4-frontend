@@ -5,7 +5,7 @@ import StarRating from "react-star-rating-component";
 import Label from "../Label/Label";
 import useRequest from "../hooks/useRequest";
 import { toast } from "react-toastify";
-const ReviewModal = ({ show, onCancel, tour, user }) => {
+const ReviewModal = ({ show, onCancel, tour, user, setData, data }) => {
   const [page, setPage] = useState(1);
   const [isLoading, isError, sendRequest, clearError] = useRequest();
   const [reviewContent, setReviewContent] = useState({
@@ -39,7 +39,7 @@ const ReviewModal = ({ show, onCancel, tour, user }) => {
     if (guideComment.length === 0) return toast.warn("Comment is required");
     if (guideComment.length < 6)
       return toast.warn("Comment must be at least 6 characters");
-    const submitReviewTour = sendRequest(
+    const submitReviewTour = await sendRequest(
       `${process.env.REACT_APP_END_POINT}/api/v1/review-tours`,
       "POST",
       { "Content-Type": "application/json" },
@@ -50,31 +50,30 @@ const ReviewModal = ({ show, onCancel, tour, user }) => {
         review: reviewContent.tourComment,
       })
     );
-    const submitReviewGuide = sendRequest(
-      `${process.env.REACT_APP_END_POINT}/api/v1/review-guides`,
-      "POST",
-      { "Content-Type": "application/json" },
-      JSON.stringify({
-        userId: user.id,
-        guideId: tour.id,
-        rating: reviewContent.guideRating,
-        review: reviewContent.guideComment,
-      })
-    );
-    try {
-      await Promise.all([submitReviewTour, submitReviewGuide]);
-    } catch (error) {
-      console.log(error);
-      return toast.info(error.message);
+    if (submitReviewTour) {
+      const submitReviewGuide = await sendRequest(
+        `${process.env.REACT_APP_END_POINT}/api/v1/review-guides`,
+        "POST",
+        { "Content-Type": "application/json" },
+        JSON.stringify({
+          userId: user.id,
+          guideId: tour.guideId.id,
+          rating: reviewContent.guideRating,
+          review: reviewContent.guideComment,
+        })
+      );
+      if (submitReviewGuide) toast.success("Successfully submit review");
+      onCancel();
+      setData(data.filter(d => d.id !== tour.id));
+      setReviewContent({
+        tourRating: 0,
+        tourComment: "",
+        guideRating: 0,
+        guideComment: "",
+      });
     }
-    setReviewContent({
-      tourRating: 0,
-      tourComment: "",
-      guideRating: 0,
-      guideComment: "",
-    });
-    toast.success("Successfully");
   };
+
   return (
     <Modal
       className="review-modal"

@@ -8,6 +8,7 @@ const MyReview = ({ user }) => {
   const [data, setData] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [chosenTour, setChosenTour] = useState(null);
+
   useEffect(() => {
     const getBookings = async () => {
       const data = await sendRequest(
@@ -47,6 +48,8 @@ const MyReview = ({ user }) => {
           onCancel={handleCloseModal}
           tour={chosenTour}
           user={user}
+          setData={setData}
+          data={data}
         />
       )}
       <div className="account-review">

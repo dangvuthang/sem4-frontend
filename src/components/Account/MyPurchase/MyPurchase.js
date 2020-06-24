@@ -77,9 +77,9 @@ const MyPurchase = ({ user }) => {
         }
       >
         <p style={{ fontSize: "1.5rem", padding: "1rem" }}>
-          Cancel tour means you will only receive 90% of the total amount of
+          Cancel tour means you will only receive 60% of the total amount of
           money back (
-          {chosenBooking && `$${((90 * chosenBooking.price) / 100).toFixed(2)}`}
+          {chosenBooking && `$${((60 * chosenBooking.price) / 100).toFixed(2)}`}
           )
         </p>
       </Modal>

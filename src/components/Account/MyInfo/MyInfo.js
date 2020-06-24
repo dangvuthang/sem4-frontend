@@ -15,6 +15,7 @@ const MyInfo = ({ user }) => {
     email: user.email,
     name: user.name,
     phone: user.phone ? user.phone : "",
+    description: "",
     avatar: "",
     oldPassword: "",
     newPassword: "",
@@ -117,9 +118,15 @@ const MyInfo = ({ user }) => {
               onChange={handleOnChange}
               errorMsg={errorMsg.phone}
             />
-            <Label name="Description" className="myinfo__description">
-              <textarea id="tourComment" className="review-content__comment" />
-            </Label>
+            {user.roleId.id === 2 && (
+              <Label name="Description" className="myinfo__description">
+                <textarea
+                  id="tourComment"
+                  className="review-content__comment"
+                  value={inputValue.description}
+                />
+              </Label>
+            )}
             <ImageUpload
               file={inputValue.avatar}
               handleOnImageChange={handleOnChange}
