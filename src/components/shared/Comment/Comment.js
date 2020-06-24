@@ -7,7 +7,7 @@ const Comment = ({ review }) => {
     <div className="comment">
       <div className="comment__user">
         <img
-          src={`${process.env.REACT_APP_END_POINT}/images/${review.userId.avatarImage}`}
+          src={review.userId.avatarImage}
           alt="User"
           style={{
             borderRadius: "50%",

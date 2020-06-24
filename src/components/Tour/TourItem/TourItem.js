@@ -9,7 +9,7 @@ const TourItem = ({ tour }) => {
         <Link to={`/tours/${tour.id}`} className="tour-card__link">
           <img
             className="tour-card__image"
-            src={`${process.env.REACT_APP_END_POINT}/images/${tour.tourImageCover}`}
+            src={tour.tourImageCover}
             alt="Tour cover"
           />
           {tour.priceDiscount > 0 && (

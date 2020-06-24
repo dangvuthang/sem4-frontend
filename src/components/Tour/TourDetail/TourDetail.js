@@ -56,7 +56,7 @@ const TourDetail = ({ chosenTour, setChosenTour }) => {
       to right bottom,
       rgba(0, 0, 0, 0.4),
       rgba(0, 0, 0, 0.4)
-    ), url(${process.env.REACT_APP_END_POINT}/images/${tour.tourImageCover})`,
+    ), url(${tour.tourImageCover})`,
   };
 
   return (
@@ -139,7 +139,7 @@ const TourDetail = ({ chosenTour, setChosenTour }) => {
                       <div style={{ flex: "1" }}>
                         <Link to={`/guides/${tour.guideId.id}`}>
                           <img
-                            src={`${process.env.REACT_APP_END_POINT}/images/${tour.guideId.userId.avatarImage}`}
+                            src={tour.guideId.userId.avatarImage}
                             alt="Guide"
                             style={{
                               borderRadius: "50%",

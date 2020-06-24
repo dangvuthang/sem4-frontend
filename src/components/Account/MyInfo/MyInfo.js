@@ -49,11 +49,8 @@ const MyInfo = ({ user }) => {
     );
     if (data) {
       const { email, name, avatarImage, jwt } = data;
-      toast.info("Processing...", { autoClose: 3000 });
-      setTimeout(() => {
-        auth.login(jwt, { email, name, avatarImage });
-        toast.success("Updated info Successfully");
-      }, 3000);
+      auth.login(jwt, { email, name, avatarImage });
+      toast.success("Updated info Successfully");
     }
   };
 

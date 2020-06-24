@@ -88,11 +88,7 @@ const MainNav = ({ reference, tourTypes }) => {
                       style={{ padding: "1.1rem" }}
                     >
                       <img
-                        src={
-                          auth.user.avatarImage.startsWith("http")
-                            ? auth.user.avatarImage
-                            : `${process.env.REACT_APP_END_POINT}/images/${auth.user.avatarImage}`
-                        }
+                        src={auth.user.avatarImage}
                         style={{
                           width: "50px",
                           height: "50px",
@@ -107,11 +103,7 @@ const MainNav = ({ reference, tourTypes }) => {
                           <div className="user-dropdown__data">
                             <div className="user-dropdown__avatar">
                               <img
-                                src={
-                                  auth.user.avatarImage.startsWith("http")
-                                    ? auth.user.avatarImage
-                                    : `${process.env.REACT_APP_END_POINT}/images/${auth.user.avatarImage}`
-                                }
+                                src={auth.user.avatarImage}
                                 style={{
                                   width: "50px",
                                   height: "50px",

@@ -98,11 +98,7 @@ const Account = () => {
                 <div className="account-control">
                   <div className="account-control__avatar">
                     <img
-                      src={
-                        auth.user.avatarImage.startsWith("http")
-                          ? auth.user.avatarImage
-                          : `${process.env.REACT_APP_END_POINT}/images/${auth.user.avatarImage}`
-                      }
+                      src={auth.user.avatarImage}
                       style={{
                         width: "100px",
                         height: "100px",

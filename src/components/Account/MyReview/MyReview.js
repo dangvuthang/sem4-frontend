@@ -67,7 +67,7 @@ const MyReview = ({ user }) => {
             {data.map(item => (
               <div className="account-review__card" key={item.id}>
                 <img
-                  src={`${process.env.REACT_APP_END_POINT}/images/${item.tourId.tourImageCover}`}
+                  src={item.tourId.tourImageCover}
                   alt="Cover"
                   className="account-review__image"
                 />

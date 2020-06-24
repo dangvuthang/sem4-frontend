@@ -44,7 +44,7 @@ const Compare = ({ chosenTour, setChosenTour }) => {
                   ></i>
                   <div className="compare-tour__item-img">
                     <img
-                      src={`${process.env.REACT_APP_END_POINT}/images/${tour.tourImageCover}`}
+                      src={tour.tourImageCover}
                       style={{
                         width: "250px",
                         height: "180px",

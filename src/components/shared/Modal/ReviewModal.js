@@ -143,7 +143,7 @@ const ReviewModal = ({ show, onCancel, tour, user, setData, data }) => {
         ) : (
           <div className="review-content__item">
             <img
-              src={`${process.env.REACT_APP_END_POINT}/images/${tour.guideId.userId.avatarImage}`}
+              src={tour.guideId.userId.avatarImage}
               alt="avatar"
               style={{ width: "50px", height: "50px", borderRadius: "50%" }}
             />

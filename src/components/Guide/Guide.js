@@ -74,7 +74,7 @@ const Guide = props => {
             <div className="col-3">
               <div className="guide-avatar">
                 <img
-                  src={`${process.env.REACT_APP_END_POINT}/images/${guide.userId.avatarImage}`}
+                  src={guide.userId.avatarImage}
                   alt="Guide"
                   style={{
                     width: "200px",

@@ -62,7 +62,7 @@ const BookingModal = ({
           }}
         >
           <img
-            src={`${process.env.REACT_APP_END_POINT}/images/${tour.tourImageCover}`}
+            src={tour.tourImageCover}
             alt="Cover"
             style={{ width: "5rem", height: "5rem" }}
           />

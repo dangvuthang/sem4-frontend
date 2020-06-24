@@ -9,7 +9,6 @@ import AuthContext from "../context/authContext";
 import { signInWithFacebook, signInWithGoogle } from "../../../utils/firebase";
 import ImageUpload from "../ImageUpload/ImageUpload";
 import "./AuthModal.scss";
-import { toast } from "react-toastify";
 
 const LoginModal = ({ isModalOpen, handleOnModalClose }) => {
   const auth = useContext(AuthContext);
@@ -76,21 +75,18 @@ const LoginModal = ({ isModalOpen, handleOnModalClose }) => {
       if (data) {
         const { email, name, avatarImage, jwt } = data;
         if (inputValue.avatar) {
-          toast.info("Processing...", { autoClose: 3000 });
-          setTimeout(() => {
-            auth.login(jwt, { email, name, avatarImage });
-            handleOnModalClose();
-            const resetValue = {
-              email: "",
-              password: "",
-              confirmPassword: "",
-              name: "",
-              phone: "",
-            };
-            setIsLogin(true);
-            setInputValue({ ...resetValue, avatar: "" });
-            setErrorMsg(resetValue);
-          }, 3000);
+          auth.login(jwt, { email, name, avatarImage });
+          handleOnModalClose();
+          const resetValue = {
+            email: "",
+            password: "",
+            confirmPassword: "",
+            name: "",
+            phone: "",
+          };
+          setIsLogin(true);
+          setInputValue({ ...resetValue, avatar: "" });
+          setErrorMsg(resetValue);
         } else {
           auth.login(jwt, { email, name, avatarImage });
           handleOnModalClose();
