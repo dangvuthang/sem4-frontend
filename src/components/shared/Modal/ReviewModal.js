@@ -64,7 +64,7 @@ const ReviewModal = ({ show, onCancel, tour, user, setData, data }) => {
       );
       if (submitReviewGuide) toast.success("Successfully submit review");
       onCancel();
-      setData(data.filter(d => d.id !== tour.id));
+      setData(data.filter(t => t.tourId.id !== tour.id));
       setReviewContent({
         tourRating: 0,
         tourComment: "",

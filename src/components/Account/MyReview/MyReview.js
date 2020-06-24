@@ -3,6 +3,7 @@ import "./MyReview.scss";
 import useRequest from "../../shared/hooks/useRequest";
 import DatePicker from "react-date-picker";
 import ReviewModal from "../../shared/Modal/ReviewModal";
+import LoadingSpinner from "../../shared/LoadingSpinner/LoadingSpinner";
 const MyReview = ({ user }) => {
   const [isLoading, isError, sendRequest, clearError] = useRequest();
   const [data, setData] = useState([]);
@@ -42,6 +43,7 @@ const MyReview = ({ user }) => {
 
   return (
     <>
+      {isLoading && <LoadingSpinner asOverlay />}
       {chosenTour && (
         <ReviewModal
           show={showModal}
@@ -59,6 +61,7 @@ const MyReview = ({ user }) => {
             Tell us what you think about the tour and guide
           </p>
         </div>
+        {isLoading && <LoadingSpinner asOverlay />}
         {data.length > 0 && (
           <div className="account-review__list">
             {data.map(item => (
