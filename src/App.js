@@ -4,7 +4,12 @@ import Header from "./components/Header/Header";
 import Banner from "./components/Banner/Banner";
 import BannerInfo from "./components/Banner/BannerInfo";
 import AuthContext from "./components/shared/context/authContext";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import { auth } from "./utils/firebase";
 import Search from "./components/Search/Search";
 import TourList from "./components/Tour/TourList";
@@ -15,6 +20,7 @@ import "react-toastify/dist/ReactToastify.min.css";
 import Account from "./components/Account/Account";
 import Compare from "./components/Compare/Compare";
 import Guide from "./components/Guide/Guide";
+import NotFound from "./components/NotFound/NoutFound";
 function App() {
   const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
@@ -119,6 +125,11 @@ function App() {
             <BannerInfo />
             <Account />
           </Route>
+          <Route path="/not-found" exact>
+            <BannerInfo />
+            <NotFound />
+          </Route>
+          <Redirect to="/not-found" />
         </Switch>
       </Router>
     </AuthContext.Provider>

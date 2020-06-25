@@ -1,0 +1,19 @@
+.not-found {
+  padding: 4rem 0;
+  &__title {
+    color: #e8e9eb;
+    font-size: 12rem;
+    line-height: 178px;
+    text-align: center;
+  }
+  &__body {
+    color: #29303b;
+    font-size: 15px;
+    line-height: 1.43;
+    margin: 0 auto;
+    max-width: 50rem;
+  }
+  &__link {
+    color: var(--main);
+  }
+}
