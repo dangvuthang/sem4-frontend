@@ -1,8 +1,9 @@
 .comment {
   padding: 1rem 0;
-  border-top: 1px solid #8a92a3;
-  border-bottom: 1px solid #8a92a3;
+  border-top: 1px solid #dedfe0;
+  padding-top: 2rem;
   display: flex;
+  margin-bottom: 2rem;
   &__user {
     flex: 1;
     display: flex;

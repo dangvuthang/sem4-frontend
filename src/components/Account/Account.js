@@ -11,6 +11,8 @@ import MyPurchase from "./MyPurchase/MyPurchase";
 import MyReview from "./MyReview/MyReview";
 import Modal from "../shared/Modal/Modal";
 import { toast } from "react-toastify";
+import ViewReview from "./ViewReview/ViewReview";
+
 const Account = () => {
   const auth = useContext(AuthContext);
   const [user, setUser] = useState(null);
@@ -24,11 +26,17 @@ const Account = () => {
       const user = await sendRequest(
         `${process.env.REACT_APP_END_POINT}/api/v1/users/${auth.user.email}`
       );
-      setUser(user);
+      if (user.roleId.id === 2) {
+        const guide = await sendRequest(
+          `${process.env.REACT_APP_END_POINT}/api/v1/guides/${user.id}`
+        );
+        const modifyGuide = { ...guide.userId, guideId: { ...guide } };
+        setUser(modifyGuide);
+      } else setUser(user);
     };
     getCurrentUser();
   }, [auth.user, sendRequest]);
-  console.log(user);
+
   const handleLogout = () => {
     history.push("/");
     auth.logout();
@@ -43,6 +51,17 @@ const Account = () => {
   };
 
   const handleConfirmDeactive = async () => {
+    const bookings = await sendRequest(
+      `${process.env.REACT_APP_END_POINT}/api/v1/bookings/${
+        user.id
+      }?upcoming=${true}`
+    );
+    if (bookings) {
+      if (bookings.length > 0) {
+        setShowModal(false);
+        return toast.warn(`You still have upcoming tour on your schedule.`);
+      }
+    }
     const data = await sendRequest(
       `${process.env.REACT_APP_END_POINT}/api/v1/users/${user.email}`,
       "DELETE"
@@ -54,7 +73,7 @@ const Account = () => {
       toast.success("Successfully deactive your account");
     }
   };
-  console.log(user);
+
   return (
     <>
       {isLoading && <LoadingSpinner asOverlay />}
@@ -90,7 +109,9 @@ const Account = () => {
           want to deactive your account?
         </p>
       </Modal>
-      {user && (
+      {!user ? (
+        <p className="warning">Please login to gain access to this page</p>
+      ) : (
         <section className="account">
           <div className="container">
             <div className="row">
@@ -116,16 +137,14 @@ const Account = () => {
                         My Account
                       </Link>
                     </li>
-                    {user.roleId.id === 3 && (
-                      <li className="account-control__item">
-                        <Link
-                          to="/account?myPurchase"
-                          className="account-control__link"
-                        >
-                          Purchase History
-                        </Link>
-                      </li>
-                    )}
+                    <li className="account-control__item">
+                      <Link
+                        to="/account?myPurchase"
+                        className="account-control__link"
+                      >
+                        Purchase History
+                      </Link>
+                    </li>
                     <li className="account-control__item">
                       <Link
                         to="/account?mySchedule"
@@ -142,14 +161,26 @@ const Account = () => {
                         Write Rating &amp; Review
                       </Link>
                     </li>
-                    <li className="account-control__item">
-                      <button
-                        className="account-control__link"
-                        onClick={handleDeactive}
-                      >
-                        Deactivate My Account
-                      </button>
-                    </li>
+                    {user.roleId.id === 2 && (
+                      <li className="account-control__item">
+                        <Link
+                          to="/account?viewReview"
+                          className="account-control__link"
+                        >
+                          My Rating &amp; Review
+                        </Link>
+                      </li>
+                    )}{" "}
+                    {user.roleId.id === 3 && (
+                      <li className="account-control__item">
+                        <button
+                          className="account-control__link"
+                          onClick={handleDeactive}
+                        >
+                          Deactivate My Account
+                        </button>
+                      </li>
+                    )}
                     <li className="account-control__item">
                       <button
                         className="account-control__link"
@@ -175,6 +206,10 @@ const Account = () => {
                   )}
                 {location.search === "?myReview" &&
                   location.pathname === "/account" && <MyReview user={user} />}
+                {location.search === "?viewReview" &&
+                  location.pathname === "/account" && (
+                    <ViewReview user={user} />
+                  )}
               </div>
             </div>
           </div>

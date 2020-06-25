@@ -15,7 +15,7 @@ const MyInfo = ({ user }) => {
     email: user.email,
     name: user.name,
     phone: user.phone ? user.phone : "",
-    description: "",
+    description: user.guideId ? user.guideId.description : "",
     avatar: "",
     oldPassword: "",
     newPassword: "",
@@ -32,6 +32,7 @@ const MyInfo = ({ user }) => {
       name: inputValue.name,
       phone: inputValue.phone,
     };
+    if (user.roleId.id === 2) checkObj.description = inputValue.description;
     for (const key in checkObj) {
       const message = validate({ id: key, value: checkObj[key] });
       if (message) return toast.warning(message);
@@ -41,16 +42,31 @@ const MyInfo = ({ user }) => {
     formData.append("name", checkObj.name);
     formData.append("phone", checkObj.phone);
     if (inputValue.avatar) formData.append("avatarImage", inputValue.avatar);
-    const data = await sendRequest(
-      `${process.env.REACT_APP_END_POINT}/api/v1/users/${checkObj.email}`,
-      "PUT",
-      {},
-      formData
-    );
-    if (data) {
-      const { email, name, avatarImage, jwt } = data;
-      auth.login(jwt, { email, name, avatarImage });
-      toast.success("Updated info Successfully");
+    if (user.roleId.id === 2) {
+      formData.append("description", checkObj.description);
+      const data = await sendRequest(
+        `${process.env.REACT_APP_END_POINT}/api/v1/guides/${user.id}`,
+        "PUT",
+        {},
+        formData
+      );
+      if (data) {
+        const { email, name, avatarImage, jwt } = data;
+        auth.login(jwt, { email, name, avatarImage });
+        toast.success("Updated info Successfully");
+      }
+    } else {
+      const data = await sendRequest(
+        `${process.env.REACT_APP_END_POINT}/api/v1/users/${checkObj.email}`,
+        "PUT",
+        {},
+        formData
+      );
+      if (data) {
+        const { email, name, avatarImage, jwt } = data;
+        auth.login(jwt, { email, name, avatarImage });
+        toast.success("Updated info Successfully");
+      }
     }
   };
 
@@ -118,10 +134,16 @@ const MyInfo = ({ user }) => {
             {user.roleId.id === 2 && (
               <Label name="Description" className="myinfo__description">
                 <textarea
-                  id="tourComment"
+                  id="description"
                   className="review-content__comment"
                   value={inputValue.description}
+                  onChange={handleOnChange}
                 />
+                {errorMsg.description && (
+                  <div class="input-group__error-message">
+                    {errorMsg.description}
+                  </div>
+                )}
               </Label>
             )}
             <ImageUpload

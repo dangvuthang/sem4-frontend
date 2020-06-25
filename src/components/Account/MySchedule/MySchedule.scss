@@ -30,6 +30,21 @@
       padding: 1rem;
       font-size: 1.4rem;
       display: block;
+      transition: all 0.3s;
+      &:hover {
+        background-color: darken(#4dbf1c, 5%);
+      }
     }
   }
+  &__guide {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 400px);
+  gap: 2rem;
+  margin-top: 2rem;
 }

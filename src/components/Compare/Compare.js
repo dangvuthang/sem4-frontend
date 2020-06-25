@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Compare.scss";
 import moment from "moment";
+import { Link } from "react-router-dom";
 const Compare = ({ chosenTour, setChosenTour }) => {
   console.log(chosenTour);
 
@@ -34,6 +35,7 @@ const Compare = ({ chosenTour, setChosenTour }) => {
               <li className="compare-tour__category-by">Start Date</li>
               <li className="compare-tour__category-by">Duration</li>
               <li className="compare-tour__category-by">Joined</li>
+              <li className="compare-tour__category-by">Detail</li>
             </ul>
             {chosenTour.map(tour => (
               <ul className="compare-tour__list" key={tour.id}>
@@ -102,6 +104,14 @@ const Compare = ({ chosenTour, setChosenTour }) => {
                 <li className="compare-tour__item">{tour.duration} Days</li>{" "}
                 <li className="compare-tour__item">
                   {tour.currentGroupSize}/{tour.maxGroupSize}
+                </li>
+                <li className="compare-tour__item">
+                  <Link
+                    to={`/tours/${tour.id}`}
+                    className="compare-tour__item-link"
+                  >
+                    Tour Detail
+                  </Link>
                 </li>
               </ul>
             ))}

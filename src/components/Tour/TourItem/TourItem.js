@@ -49,7 +49,9 @@ const TourItem = ({ tour }) => {
           </div>
           <div className="tour-card__data">
             <i className="far fa-user tour-card__icon"></i>
-            <span>Max: {tour.maxGroupSize}</span>
+            <span>
+              Current: {tour.currentGroupSize}/{tour.maxGroupSize}
+            </span>
           </div>
         </div>
         <div className="tour-card__section">

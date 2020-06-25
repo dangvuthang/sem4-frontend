@@ -13,14 +13,12 @@ const MyReview = ({ user }) => {
   useEffect(() => {
     const getBookings = async () => {
       const data = await sendRequest(
-        `${process.env.REACT_APP_END_POINT}/api/v1/bookings/${user.id}`
+        `${process.env.REACT_APP_END_POINT}/api/v1/bookings/${
+          user.id
+        }?past=${true}`
       );
       if (data) {
-        const checkIfUserCanReview = data.filter(
-          booking => new Date(booking.endDate) < new Date()
-        );
-        console.log(checkIfUserCanReview);
-        const checkIfUserHadReviewed = checkIfUserCanReview.filter(
+        const checkIfUserHadReviewed = data.filter(
           booking =>
             booking.tourId.reviewTourCollection.filter(
               review => review.userId.id === user.id
@@ -61,6 +59,15 @@ const MyReview = ({ user }) => {
             Tell us what you think about the tour and guide
           </p>
         </div>
+        <p
+          style={{
+            fontSize: "1.3rem",
+            textAlign: "right",
+            margin: "1rem 0",
+          }}
+        >
+          Note: Review will be available after your tour end
+        </p>
         {isLoading && <LoadingSpinner asOverlay />}
         {data.length > 0 && (
           <div className="account-review__list">

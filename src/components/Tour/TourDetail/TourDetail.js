@@ -212,7 +212,7 @@ const TourDetail = ({ chosenTour, setChosenTour }) => {
                     >
                       Tour Location &amp; Schedule
                     </h3>
-                    <Map location={tour.tourLocationCollection} />
+                    {/* <Map location={tour.tourLocationCollection} /> */}
                   </div>
                   <div
                     className="tour-detail__guide"

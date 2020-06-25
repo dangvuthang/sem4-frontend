@@ -20,11 +20,6 @@ const useForm = inputField => {
     else inputElement.classList.remove("has-value");
     const errorObj = { ...errorMsg };
     let message = validate(inputElement);
-    if (inputElement.id === "confirmPassword") {
-      if (inputElement.value !== inputValue.password)
-        message = "Confirm Password and Password does not match.";
-      else message = "";
-    }
     if (!message) {
       delete errorObj[inputElement.id];
       setErrorMsg({ ...errorObj });

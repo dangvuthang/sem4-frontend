@@ -65,7 +65,6 @@ const LoginModal = ({ isModalOpen, handleOnModalClose }) => {
       if (inputValue.avatar) {
         formData.append("avatarImage", inputValue.avatar);
       }
-      console.log(formData);
       const data = await sendRequest(
         `${process.env.REACT_APP_END_POINT}/api/v1/users/signup`,
         "POST",
@@ -74,22 +73,22 @@ const LoginModal = ({ isModalOpen, handleOnModalClose }) => {
       );
       if (data) {
         const { email, name, avatarImage, jwt } = data;
+        const resetValue = {
+          email: "",
+          password: "",
+        };
         if (inputValue.avatar) {
           auth.login(jwt, { email, name, avatarImage });
           handleOnModalClose();
-          const resetValue = {
-            email: "",
-            password: "",
-            confirmPassword: "",
-            name: "",
-            phone: "",
-          };
           setIsLogin(true);
-          setInputValue({ ...resetValue, avatar: "" });
+          setInputValue(resetValue);
           setErrorMsg(resetValue);
         } else {
           auth.login(jwt, { email, name, avatarImage });
           handleOnModalClose();
+          setIsLogin(true);
+          setInputValue(resetValue);
+          setErrorMsg(resetValue);
         }
       }
     }

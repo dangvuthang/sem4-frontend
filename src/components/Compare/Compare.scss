@@ -74,6 +74,10 @@
     &:not(:last-child) {
       border-bottom: 1px solid #e6e6e6;
     }
+    &-link {
+      color: var(--main);
+      text-transform: uppercase;
+    }
   }
   &__close {
     padding: 0.5rem;

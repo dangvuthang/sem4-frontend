@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./BookingModal.scss";
 import Modal from "./Modal";
 import _ from "lodash";
@@ -33,7 +33,7 @@ const BookingModal = ({
       onClear();
       setIsBook(true);
       toast.success(data.message);
-    }
+    } else onClear();
   };
 
   return (
