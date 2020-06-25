@@ -14,6 +14,7 @@ const Sort = ({ sort, setSort }) => {
         <option value="ratingAverage">Rating</option>
         <option value="actualPrice">Price</option>
         <option value="duration">Duration</option>
+        <option value="id">Newest</option>
       </select>
       <select
         className="sort-section__order"
