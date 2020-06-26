@@ -1,5 +1,6 @@
 let oldPassword;
 let password;
+
 export default ({ id, value }) => {
   if (id === "email") {
     if (value === "") return "Email is required";
@@ -17,6 +18,7 @@ export default ({ id, value }) => {
   }
   if (id === "name") {
     if (value === "") return "Name is required";
+    if (value.length < 6) return "Name must contain at least 6 characters";
   }
   if (id === "phone") {
     if (value === "") return "Phone is required";
