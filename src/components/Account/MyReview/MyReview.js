@@ -69,6 +69,11 @@ const MyReview = ({ user }) => {
           Note: Review will be available after your tour end
         </p>
         {isLoading && <LoadingSpinner asOverlay />}
+        {data.length === 0 && (
+          <p style={{ color: "red", fontSize: "1.6rem" }}>
+            No review available at the moment.
+          </p>
+        )}
         {data.length > 0 && (
           <div className="account-review__list">
             {data.map(item => (

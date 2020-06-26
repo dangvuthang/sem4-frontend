@@ -71,6 +71,7 @@ const ReviewModal = ({ show, onCancel, tour, user, setData, data }) => {
         guideRating: 0,
         guideComment: "",
       });
+      setPage(1);
     }
   };
 

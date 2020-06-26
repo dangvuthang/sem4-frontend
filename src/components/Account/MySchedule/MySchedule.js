@@ -4,9 +4,8 @@ import Calendar from "react-calendar";
 import useRequest from "../../shared/hooks/useRequest";
 import ErrorModal from "../../shared/Modal/ErrorModal";
 import DatePicker from "react-date-picker";
-import Modal from "../../shared/Modal/Modal";
 import _ from "lodash";
-import Comment from "../../shared/Comment/Comment";
+
 const MySchedule = ({ user }) => {
   const [isLoading, isError, sendRequest, clearError] = useRequest();
   const [bookings, setBookings] = useState([]);
@@ -15,9 +14,11 @@ const MySchedule = ({ user }) => {
 
   useEffect(() => {
     const getBookings = async () => {
-      const data = await sendRequest(
-        `${process.env.REACT_APP_END_POINT}/api/v1/tours/search?guideId=${user.guideId.id}`
-      );
+      let url = `${process.env.REACT_APP_END_POINT}/api/v1/`;
+      if (user.roleId.id === 2)
+        url += `tours/search?guideId=${user.guideId.id}`;
+      if (user.roleId.id === 3) url += `bookings/${user.id}?upcoming=${true}`;
+      const data = await sendRequest(url);
       if (data) {
         setTours(data);
         if (user.roleId.id === 2) {
